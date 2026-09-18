@@ -2,28 +2,29 @@ import { runSimulation } from "./shared/simulation.mjs";
 
 const I18N = {
   ko: {
-    utility: "FRUIT-FLY MARKET LAB · PAPER RESEARCH ONLY", eyebrow: "PAPER RESEARCH LAB · NO REAL ORDERS",
+    utility: "FRUIT-FLY MARKET LAB · PAPER RESEARCH ONLY", appearance: "화면 테마", darkMode: "다크", lightMode: "라이트", eyebrow: "PAPER RESEARCH LAB · NO REAL ORDERS",
     lede: "초파리 신경망이 오늘의 시장을 본다면.", experimentStatus: "실험 상태", paperMode: "PAPER MODE", checking: "확인 중",
     loadingTitle: "데이터를 불러오는 중입니다.", loadingCopy: "잠시만 기다려주세요.", controls: "시뮬레이션 조작",
-    symbol: "종목", kpiStrategy: "KPI 전략", seed: "실험 시드", rerun: "같은 조건으로 재실행", update: "오늘 데이터 업데이트", refreshPublished: "최신 배포 데이터 확인",
+    symbol: "종목", kpiStrategy: "성과 기준", seed: "실험 시드 (고정)", rerun: "시드 2로 다시 계산", update: "오늘 데이터 업데이트", refreshPublished: "최신 배포 데이터 확인",
     keyPerformance: "핵심 성과", maxDrawdown: "최대 낙폭", lowerDefensive: "0에 가까울수록 방어적", sharpe: "샤프 지수",
     dailyReturns: "무위험 수익률 0% 가정 · 일별 기준", todayDecision: "오늘의 뇌 투표", guideTitle: "대시보드 읽는 법",
-    guideHint: "용어와 숫자의 의미", guideFlyRisk: "8개 종목이 뇌 합의·추세·변동성 점수로 자금을 경쟁합니다. 전체 주식 비중은 50~95%의 10단계, 종목당 최대 25%이며 배분은 최소 3거래일 유지합니다.",
-    guidePureFly: "뇌 다수결을 다음 거래일 시가에 5%·55%·95% 비중으로 반영한 직접 신호 대조군입니다.",
+    guideHint: "용어와 숫자의 의미", guideFlyRisk: "8개 종목의 뇌 합의·추세·변동성을 비교해 비중을 정합니다. 전체 주식 비중은 50~95%, 종목당 최대 25%이며 한 번 정한 배분은 최소 3거래일 유지합니다.",
+    guidePureFly: "각 종목을 50% 비중에서 시작합니다. 매수나 매도 우세가 이틀 연속 이어지면 다음 시가에 10%p씩 조정하며, 비중은 20~80% 안에서 움직입니다.",
+    guideSma: "수정주가 기준 5일 평균이 20일 평균보다 높으면 다음 시가에 매수하고, 낮거나 같으면 현금으로 전환합니다. 비교 기준이라 0%·100% 비중을 사용합니다.",
     guideDrawdown: "고점에서 저점까지 계좌가 가장 크게 줄었던 비율입니다.",
     guideSharpe: "변동성 대비 일별 수익입니다. 높을수록 같은 흔들림으로 더 많은 수익을 냈다는 뜻입니다.",
     activityScore: "활성도 0–100", guideActivity: "영역별 스파이크를 로그 변환해 가장 활발한 영역을 100으로 둔 상대값입니다. 수익 확률이 아닙니다.",
     reward: "보상", guideReward: "과거 프록시에서 직전 계좌 수익을 -1~+1로 제한해 기억에 반영합니다. 최신 MaleCNS 실행에는 주입하지 않습니다.",
     replayTitle: "초파리의 판단이 포지션이 되는 순간", replayAgain: "이 장면 다시 보기", marketInput: "시장 입력", fourVotes: "네 개의 뇌 투표",
-    consensus: "집단 합의", positionSizing: "종목 경쟁 배분", stockExposure: "선택 종목 다음 목표", nextSessionResult: "다음 장 결과", discordIndex: "집단 불화 지수",
+    consensus: "집단 합의", positionSizing: "종목별 비중 결정", stockExposure: "선택 종목 다음 목표", nextSessionResult: "다음 장 결과", discordIndex: "집단 불화 지수",
     discordCalm: "의견이 거의 하나로 모였습니다.", discordTense: "의견이 갈리며 긴장이 높습니다.", discordDeadlock: "2대2 교착 상태입니다.",
-    raceTitle: "어떤 시간 감각의 초파리가 앞서고 있나?", raceFootnote: "각 초파리의 단독 신호를 동일한 $100,000 계좌에 적용한 프록시 경기입니다.",
+    raceTitle: "어떤 초파리가 가장 앞서고 있나?", raceFootnote: "각 초파리의 신호를 같은 $100,000 계좌에 적용해 비교합니다.",
     rank: "위", flyNames: { 1: "정찰자", 2: "스윙어", 3: "항해자", 4: "예언자" },
     multiverseTitle: "반대로 결정했다면?", actualWorld: "이 세계 · Fly+Risk", oppositeWorld: "평행세계 · 반대 비중",
-    multiverseFootnote: "선택일 전체 계좌에서 해당 종목의 실제 목표 비중과 반대 비중(25%−목표)을 비교한 교육용 장면입니다.",
-    actualWorldWins: "초파리 세계가 평행세계보다 방어했습니다.", oppositeWorldWins: "이번 하루는 반대 비중이 더 유리했습니다.", worldsTie: "두 세계의 결과가 거의 같습니다.",
+    multiverseFootnote: "선택일 전체 계좌에서 해당 종목의 실제 목표 비중과 반대 비중(25%−목표)을 다음 거래일까지 비교합니다.",
+    actualWorldWins: "실제 비중의 하루 결과가 더 좋았습니다.", oppositeWorldWins: "이날은 반대 비중의 결과가 더 좋았습니다.", worldsTie: "두 비중의 결과가 거의 같습니다.",
     awaitingNextSession: "다음 거래일 결과를 기다리는 중", resolvedFromPrevious: "최근 결과가 나온 판단", oneDayPnl: "하루 손익", exposureWord: "비중",
-    leagueKicker: "LEAGUE TABLE · COST & FX ADJUSTED", leagueTitle: "위험 조절 초파리는 기준 전략을 이겼나?",
+    leagueKicker: "LEAGUE TABLE · COST & FX ADJUSTED", leagueTitle: "Fly+Risk는 비교 전략보다 나았을까?",
     performanceChart: "전략별 누적 자산 비교 그래프", nextOpen: "다음 거래일 시가 체결", initialCapital: "선택 기간 시작 $100,000", allFees: "모든 전략 수수료 0.1%",
     performancePeriod: "성과 조회 기간", latestPeriodHint: "기본 최근 1년 · 업데이트 후 최신 거래일로 자동 이동", periodStart: "시작일", periodEnd: "종료일", applyPeriod: "기간 적용", periodBasis: "선택 구간을 $100,000에서 재시작", periodInvalid: "시작일은 종료일보다 빨라야 합니다.",
     fxAdjusted: "원/달러 환율 반영", holidayCarry: "휴장일 직전 평가액 유지", rollingWindows: "252거래일 창 · 63거래일 간격 점검",
@@ -33,9 +34,9 @@ const I18N = {
     activityMicrocopy: "선택한 초파리의 당일 활성도를 대비 강화해 표시합니다. 숫자는 원래 상대값이며 수익 확률이 아닙니다.", swarmVotes: "초파리 4마리의 투표",
     brainMap: "회전 가능한 초파리 뇌 영역 지도", rotateLeft: "뇌를 왼쪽으로 회전", rotateRight: "뇌를 오른쪽으로 회전",
     dragBrain: "드래그해서 회전 · 점을 눌러 영역 확인", selectedRegion: "선택 영역", relativeActivity: "상대 활성도",
-    nextExposure: "포트폴리오 다음 주식 비중", exposureLadder: "10단계 총 주식 비중", exposureNote: "전체 주식 50~95%, 종목당 최대 25%, 현금 5~50%로 운용합니다.", stepOf: "단계",
+    nextExposure: "포트폴리오 다음 주식 비중", exposureLadder: "10단계 총 주식 비중", exposureNote: "전체 주식 비중을 50~95%의 10단계로 조절합니다.", pureNextExposure: "선택 종목 다음 주식 비중", pureExposureLadder: "Pure Fly 7단계 종목 비중", pureExposureNote: "같은 방향 신호가 이틀 이어질 때 10%p씩, 20~80% 안에서 조절합니다.", stepOf: "단계",
     recentDecisions: "최근 판단 기록", feesIncluded: "수수료·환율 포함", date: "날짜", brainVote: "뇌 투표", riskExposure: "다음 목표 비중", currentExposure: "현재 보유 비중",
-    holdingsTitle: "현재 투입 자산 내역", holdingsSubtitle: "통합 $100,000 계좌에서 8종목이 점수로 자금을 경쟁한 실제 모의 보유량입니다.", bookValue: "계좌 평가액", stockValue: "주식 평가액", cashBalance: "현금", actualExposure: "현재 주식 비중", weightedNextTarget: "다음 주식 총비중", holdingAsset: "종목", allocationScore: "배분 점수", shares: "보유 수량", markPrice: "기준 가격", nextTargetShort: "다음 목표", holdingsFootnote: "수수료·환율 반영 통합 모의 장부입니다. 소수점 수량을 허용하고 종목당 목표는 최대 25%이며, 목표 비중은 다음 거래일 시가에 적용됩니다.", asOf: "기준", rebalanced: "당일 조정", carried: "유지",
+    holdingsTitle: "현재 보유 내역", holdingsBook: "보유 전략", holdingsRisk: "Fly+Risk", holdingsPure: "Pure Fly", holdingsRiskSubtitle: "한 계좌에서 종목별 신호와 위험 수준을 함께 반영한 모의 보유 내역입니다.", holdingsPureSubtitle: "초파리 투표만으로 비중을 천천히 조정했을 때의 모의 보유 내역입니다.", bookValue: "계좌 평가액", stockValue: "주식 평가액", cashBalance: "현금", actualExposure: "현재 주식 비중", weightedNextTarget: "다음 거래일 주식 비중", holdingAsset: "종목", allocationScore: "종목 점수", signalLabel: "뇌 신호", shares: "보유 수량", markPrice: "기준 가격", nextTargetShort: "다음 목표", holdingsRiskFootnote: "수수료와 환율을 반영했습니다. 종목당 목표는 최대 25%이며, 새 목표는 다음 거래일 시가에 적용됩니다.", holdingsPureFootnote: "종목별로 같은 금액에서 시작한 뒤 결과를 합산합니다. 표의 비중은 전체 계좌 기준이며, 같은 방향 신호가 이틀 이어지면 해당 종목 비중을 10%p 조정합니다.", asOf: "기준", rebalanced: "당일 조정", carried: "유지",
     close: "종가", paperOnly: "실험용 모의투자.", disclaimer: "투자 조언이나 실제 초파리 행동의 완전한 재현이 아닙니다.",
     lastUpdate: "마지막 업데이트", calculating: "시뮬레이션 계산 중…", localCalculation: "로컬 계산이 끝나면 자동으로 갱신됩니다.",
     loadFailed: "불러오기에 실패했습니다.", cachedTitle: "데모 또는 캐시 데이터로 실행 중", cachedCopy: "오늘 데이터 업데이트를 눌러 실제 일봉을 가져오세요.",
@@ -74,7 +75,7 @@ const I18N = {
       proxyDisclosure: "과거 프록시는 생물학적 좌·우 뉴런 대신 별도의 매수·매도 판독값을 사용합니다. 접근·회피 설명은 보상 학습을 이해하기 위한 비유입니다."
     },
     actions: { BUY: "매수", HOLD: "보유", SELL: "매도" },
-    labels: { flyRisk: "Fly+Risk", fly: "Fly Signal", shuffled: "무작위 신경망", buyHold: "Buy & Hold", sma: "이동평균", random: "랜덤" },
+    labels: { flyRisk: "Fly+Risk", fly: "Pure Fly", shuffled: "무작위 신경망", buyHold: "Buy & Hold", sma: "이동평균", random: "랜덤" },
     help: {
       equity: "선택한 전략의 8개 종목 합산 평가액입니다. 시작금액은 100,000달러입니다.",
       drawdown: "이전 최고 평가액에서 이후 최저 평가액까지의 최대 하락률입니다.",
@@ -108,26 +109,27 @@ const I18N = {
     }
   },
   en: {
-    utility: "FRUIT-FLY MARKET LAB · PAPER RESEARCH ONLY", eyebrow: "PAPER RESEARCH LAB · NO REAL ORDERS",
+    utility: "FRUIT-FLY MARKET LAB · PAPER RESEARCH ONLY", appearance: "Color theme", darkMode: "Dark", lightMode: "Light", eyebrow: "PAPER RESEARCH LAB · NO REAL ORDERS",
     lede: "What if a fruit-fly connectome watched today's market?", experimentStatus: "Experiment status", paperMode: "PAPER MODE", checking: "Checking",
     loadingTitle: "Loading data.", loadingCopy: "This should only take a moment.", controls: "Simulation controls",
-    symbol: "Asset", kpiStrategy: "KPI strategy", seed: "Experiment seed", rerun: "Rerun same setup", update: "Update daily data", refreshPublished: "Check published data",
+    symbol: "Asset", kpiStrategy: "KPI strategy", seed: "Experiment seed (fixed)", rerun: "Recalculate with seed 2", update: "Update daily data", refreshPublished: "Check published data",
     keyPerformance: "Key performance", maxDrawdown: "Maximum drawdown", lowerDefensive: "Closer to zero means more defensive", sharpe: "Sharpe ratio",
     dailyReturns: "0% risk-free rate · daily returns", todayDecision: "Today's brain vote", guideTitle: "How to read this dashboard",
-    guideHint: "Definitions for the numbers and terms", guideFlyRisk: "Eight assets compete for capital using brain consensus, trend and volatility scores. Total stock exposure uses ten levels from 50% to 95%, with a 25% cap per asset and a three-session minimum hold.",
-    guidePureFly: "A direct-signal control mapping the brain majority to 5%, 55% or 95% exposure at the next market open.",
+    guideHint: "Definitions for the numbers and terms", guideFlyRisk: "Compares brain consensus, trend and volatility across eight assets to set weights. Total stock exposure stays between 50% and 95%, each asset is capped at 25%, and an allocation is held for at least three sessions.",
+    guidePureFly: "Starts each asset at 50%. After the same BUY or SELL direction leads for two straight sessions, exposure moves 10 percentage points at the next open, within a 20–80% range.",
+    guideSma: "Buys at the next open when the 5-day adjusted-close average is above the 20-day average; otherwise it moves to cash. This benchmark uses 0% or 100% exposure.",
     guideDrawdown: "The largest peak-to-trough percentage decline in account value.",
     guideSharpe: "Daily return relative to volatility. Higher means more return for the same amount of movement.",
     activityScore: "Activity 0–100", guideActivity: "A relative score: region spikes are log-scaled and the most active region is set to 100. It is not a return probability.",
     reward: "Reward", guideReward: "Historical proxy memory uses the prior account return clipped to -1…+1. It is not injected into the latest MaleCNS run.",
     replayTitle: "The moment a fly-brain vote becomes a position", replayAgain: "Replay this decision", marketInput: "Market input", fourVotes: "Four brain votes",
-    consensus: "Swarm consensus", positionSizing: "Competitive allocation", stockExposure: "Selected asset's next target", nextSessionResult: "Next-session result", discordIndex: "Swarm disagreement",
+    consensus: "Swarm consensus", positionSizing: "Position sizing", stockExposure: "Selected asset's next target", nextSessionResult: "Next-session result", discordIndex: "Swarm disagreement",
     discordCalm: "The swarm is nearly unanimous.", discordTense: "Split opinions are raising the tension.", discordDeadlock: "The swarm is locked 2–2.",
     raceTitle: "Which time-horizon fly is leading?", raceFootnote: "A proxy race applying each fly's solo signal to the same $100,000 account.",
     rank: "#", flyNames: { 1: "Scout", 2: "Swinger", 3: "Navigator", 4: "Oracle" },
     multiverseTitle: "What if it chose the opposite?", actualWorld: "This world · Fly+Risk", oppositeWorld: "Parallel world · opposite exposure",
-    multiverseFootnote: "An educational comparison between the selected asset's actual account weight and its opposite weight (25% minus target) over the next session.",
-    actualWorldWins: "The fly world defended better than the parallel world.", oppositeWorldWins: "The opposite exposure won this single day.", worldsTie: "The two worlds finished almost level.",
+    multiverseFootnote: "Compares the selected asset's actual account weight with its opposite weight (25% minus target) through the next session.",
+    actualWorldWins: "The actual weight produced the better one-day result.", oppositeWorldWins: "The opposite weight produced the better result that day.", worldsTie: "The two weights produced nearly the same result.",
     awaitingNextSession: "Waiting for the next session", resolvedFromPrevious: "Latest resolved decision", oneDayPnl: "one-day P&L", exposureWord: "exposure",
     leagueKicker: "LEAGUE TABLE · COST & FX ADJUSTED", leagueTitle: "Did risk-managed flies beat the benchmarks?",
     performanceChart: "Cumulative account value by strategy", nextOpen: "Trades at next market open", initialCapital: "Selected period starts at $100,000", allFees: "0.1% fee on every strategy",
@@ -139,9 +141,9 @@ const I18N = {
     activityMicrocopy: "Contrast-enhanced activity for the selected fly and date. Labels retain the original relative score; they are not return probabilities.", swarmVotes: "Votes from four flies",
     brainMap: "Rotatable fruit-fly brain-region map", rotateLeft: "Rotate brain left", rotateRight: "Rotate brain right",
     dragBrain: "Drag to rotate · select a point to inspect a region", selectedRegion: "Selected region", relativeActivity: "Relative activity",
-    nextExposure: "Next total stock exposure", exposureLadder: "Ten total-exposure levels", exposureNote: "Runs at 50–95% total stock exposure, caps each asset at 25%, and keeps 5–50% cash.", stepOf: "step",
+    nextExposure: "Next total stock exposure", exposureLadder: "Ten total-exposure levels", exposureNote: "Adjusts total stock exposure across ten levels from 50% to 95%.", pureNextExposure: "Selected asset's next stock exposure", pureExposureLadder: "Seven Pure Fly exposure levels", pureExposureNote: "After two same-direction signals, exposure moves by 10 percentage points within a 20–80% range.", stepOf: "step",
     recentDecisions: "Recent decision trail", feesIncluded: "Fees & FX included", date: "Date", brainVote: "Brain vote", riskExposure: "Next target", currentExposure: "Current exposure",
-    holdingsTitle: "Currently deployed assets", holdingsSubtitle: "Actual paper holdings after eight assets compete for capital in one $100,000 account.", bookValue: "Account value", stockValue: "Stock value", cashBalance: "Cash", actualExposure: "Current stock exposure", weightedNextTarget: "Next total exposure", holdingAsset: "Asset", allocationScore: "Allocation score", shares: "Shares held", markPrice: "Mark price", nextTargetShort: "Next target", holdingsFootnote: "Unified paper ledger with fees and FX included. Fractional shares are allowed, each target is capped at 25%, and targets execute at the next market open.", asOf: "as of", rebalanced: "adjusted today", carried: "carried",
+    holdingsTitle: "Current holdings", holdingsBook: "Holdings strategy", holdingsRisk: "Fly+Risk", holdingsPure: "Pure Fly", holdingsRiskSubtitle: "Paper holdings from one account using both asset signals and portfolio risk controls.", holdingsPureSubtitle: "Paper holdings when fly votes alone adjust exposure gradually.", bookValue: "Account value", stockValue: "Stock value", cashBalance: "Cash", actualExposure: "Current stock exposure", weightedNextTarget: "Next-session stock exposure", holdingAsset: "Asset", allocationScore: "Asset score", signalLabel: "Brain signal", shares: "Shares held", markPrice: "Mark price", nextTargetShort: "Next target", holdingsRiskFootnote: "Fees and FX are included. Each asset is capped at 25%, and new targets execute at the next market open.", holdingsPureFootnote: "Each asset starts with the same amount and the results are combined. Table weights are shares of the full account; two same-direction signals move that asset's exposure by 10 percentage points.", asOf: "as of", rebalanced: "adjusted today", carried: "carried",
     close: "Close", paperOnly: "Paper-trading experiment.", disclaimer: "Not investment advice or a complete reproduction of fruit-fly behavior.",
     lastUpdate: "Last update", calculating: "Running simulation…", localCalculation: "The dashboard refreshes when local computation finishes.",
     loadFailed: "Could not load the dashboard.", cachedTitle: "Running on demo or cached data", cachedCopy: "Use Update daily data to fetch the latest daily bars.",
@@ -180,7 +182,7 @@ const I18N = {
       proxyDisclosure: "Historical proxy dates use separate BUY/SELL readouts instead of biological left/right neurons. Approach/avoidance is an analogy for understanding reinforcement."
     },
     actions: { BUY: "BUY", HOLD: "HOLD", SELL: "SELL" },
-    labels: { flyRisk: "Fly+Risk", fly: "Fly Signal", shuffled: "Shuffled network", buyHold: "Buy & Hold", sma: "Moving average", random: "Random" },
+    labels: { flyRisk: "Fly+Risk", fly: "Pure Fly", shuffled: "Shuffled network", buyHold: "Buy & Hold", sma: "Moving average", random: "Random" },
     help: {
       equity: "Combined account value across the eight assets. Starting capital is $100,000.",
       drawdown: "The largest decline from a previous account-value peak to a later trough.",
@@ -219,6 +221,7 @@ const state = {
   data: null,
   symbol: "NVDA",
   strategy: "flyRisk",
+  bookStrategy: "flyRisk",
   index: 0,
   timer: null,
   brainRotation: -12,
@@ -229,6 +232,7 @@ const state = {
   rangePreset: "1Y",
   behaviorScenario: "reward",
   mappingFlipped: false,
+  theme: document.documentElement.dataset.theme === "light" ? "light" : "dark",
   staticMode: false,
   staticSource: null,
   locale: localStorage.getItem("flyfund-locale") === "en" ? "en" : "ko",
@@ -250,8 +254,10 @@ const BRAIN_POINTS = [
   { x: 27, y: 5, z: 101, color: "#ff7b86" }
 ];
 
-const EXPOSURE_LEVELS = Array.from({ length: 10 }, (_, index) => index * 5 + 50);
+const RISK_EXPOSURE_LEVELS = Array.from({ length: 10 }, (_, index) => index * 5 + 50);
+const PURE_EXPOSURE_LEVELS = Array.from({ length: 7 }, (_, index) => index * 10 + 20);
 const PERFORMANCE_KEYS = ["flyRisk", "fly", "buyHold", "sma"];
+const EXPERIMENT_SEED = 2;
 
 const $ = (selector) => document.querySelector(selector);
 const $$ = (selector) => [...document.querySelectorAll(selector)];
@@ -304,9 +310,22 @@ function applyLocale() {
   if (state.data) renderAll();
 }
 
+function applyTheme() {
+  document.documentElement.dataset.theme = state.theme;
+  document.documentElement.style.colorScheme = state.theme;
+  state.colors = state.theme === "light"
+    ? { flyRisk: "#5f8f18", fly: "#168461", shuffled: "#7455b8", buyHold: "#157f97", sma: "#a96700", random: "#b84250" }
+    : { flyRisk: "#baf36b", fly: "#54e6aa", shuffled: "#b99aff", buyHold: "#67d8ef", sma: "#ffcb69", random: "#ff7b86" };
+  $$('[data-theme-value]').forEach((button) =>
+    button.setAttribute("aria-pressed", String(button.dataset.themeValue === state.theme))
+  );
+  if (state.data) renderPerformance();
+}
+
 async function loadDashboard() {
   const forceStaticRefresh = arguments[0] === true;
-  const seed = Number($("#seed-input").value || 42);
+  const seed = EXPERIMENT_SEED;
+  $("#seed-input").value = String(EXPERIMENT_SEED);
   setBusy(true, t("calculating"));
   try {
     if (state.staticMode) {
@@ -732,15 +751,21 @@ function renderReplay(point) {
   $("#replay-split").textContent = split;
   $("#consensus-orb").className = `consensus-orb ${point.action}`;
 
-  const exposure = Math.round(point.riskTarget * 100);
+  const pureSelected = state.strategy === "fly";
+  const portfolioPoint = pointAtOrBefore(state.data.portfolioTrace || [], point.date);
+  const riskTarget = portfolioPoint?.holdings?.[state.symbol]?.target ?? point.riskTarget;
+  const exposure = Math.round((pureSelected ? point.flyNextTarget : riskTarget) * 100);
   $("#replay-exposure").textContent = `${exposure}%`;
   $("#replay-dial").style.setProperty("--exposure", exposure);
 
   const trace = currentTrace();
   const next = trace[state.index + 1];
   if (next) {
-    const pnl = next.riskEquity - point.riskEquity;
-    const pnlPct = point.riskEquity ? pnl / point.riskEquity * 100 : 0;
+    const nextPortfolioPoint = pointAtOrBefore(state.data.portfolioTrace || [], next.date);
+    const currentEquity = pureSelected ? point.flyEquity : portfolioPoint?.value;
+    const nextEquity = pureSelected ? next.flyEquity : nextPortfolioPoint?.value;
+    const pnl = Number(nextEquity) - Number(currentEquity);
+    const pnlPct = currentEquity ? pnl / currentEquity * 100 : 0;
     $("#replay-result").textContent = moneySigned(pnl);
     $("#replay-result").className = pnl >= 0 ? "positive" : "negative";
     $("#replay-result-copy").textContent = `${next.date} · ${percent(pnlPct)}`;
@@ -798,9 +823,10 @@ function renderMultiverse() {
   const point = trace[decisionIndex];
   const next = trace[decisionIndex + 1];
   const move = next.open ? next.close / next.open - 1 : 0;
-  const actualExposure = point.riskTarget;
+  const portfolioPoint = pointAtOrBefore(state.data.portfolioTrace || [], point.date);
+  const actualExposure = portfolioPoint?.holdings?.[state.symbol]?.target ?? point.riskTarget;
   const oppositeExposure = Math.max(0, state.data.settings.riskMaximumStockWeight - actualExposure);
-  const accountValue = Number(point.riskEquity) || state.data.settings.initialCash;
+  const accountValue = Number(portfolioPoint?.value) || state.data.settings.initialCash;
   const actualPnl = accountValue * actualExposure * move;
   const oppositePnl = accountValue * oppositeExposure * move;
   const scale = Math.max(1, Math.abs(actualPnl), Math.abs(oppositePnl));
@@ -872,7 +898,7 @@ function shareNumber(value) {
   return new Intl.NumberFormat(state.locale === "ko" ? "ko-KR" : "en-US", { minimumFractionDigits: 0, maximumFractionDigits: 4 }).format(value || 0);
 }
 
-function renderHoldings(date) {
+function riskHoldingsBook(date) {
   const portfolioTrace = state.data.portfolioTrace || [];
   const baselinePoint = portfolioTrace.find((point) => point.date >= state.rangeStart) || portfolioTrace[0];
   const baselineDate = baselinePoint?.date || state.rangeStart;
@@ -890,14 +916,75 @@ function renderHoldings(date) {
       rawPrice: Number(holding.rawPrice) || 0,
       actualExposure: Number(holding.weight) || 0,
       nextTarget: Number(holding.target) || 0,
-      score: Number(holding.score) || 0
+      score: Number(holding.score) || 0,
+      action: null
     };
   });
-  const totalEquity = (Number(snapshot?.value) || 0) * scale;
-  const totalStock = (Number(snapshot?.stockValue) || 0) * scale;
-  const totalCash = (Number(snapshot?.cash) || 0) * scale;
-  const nextTarget = Number(snapshot?.targetExposure) || 0;
+  return {
+    baselineDate,
+    rows,
+    totalEquity: (Number(snapshot?.value) || 0) * scale,
+    totalStock: (Number(snapshot?.stockValue) || 0) * scale,
+    totalCash: (Number(snapshot?.cash) || 0) * scale,
+    nextTarget: Number(snapshot?.targetExposure) || 0
+  };
+}
 
+function pureHoldingsBook(date) {
+  const curve = state.data.curves.fly || [];
+  const baselinePoint = curve.find((point) => point.date >= state.rangeStart) || curve[0];
+  const baselineDate = baselinePoint?.date || state.rangeStart;
+  const baselineEquity = Number(baselinePoint?.value) || state.data.settings.initialCash;
+  const scale = baselineEquity ? state.data.settings.initialCash / baselineEquity : 1;
+  const rawRows = state.data.symbols.map((meta) => {
+    const point = pointAtOrBefore(state.data.sleeves[meta.symbol].trace, date);
+    const equity = (Number(point?.flyEquity ?? point?.equity) || 0) * scale;
+    const stock = (Number(point?.flyStockValue) || 0) * scale;
+    const internalTarget = Number(point?.flyNextTarget ?? point?.flyTarget) || 0;
+    return {
+      meta,
+      marketDate: point?.date,
+      executed: Boolean(point?.flyExecuted ?? point?.executed),
+      equity,
+      stock,
+      cash: (Number(point?.flyCash) || 0) * scale,
+      shares: (Number(point?.flyShares) || 0) * scale,
+      rawPrice: Number(point?.rawClose ?? point?.close) || 0,
+      desiredStock: equity * internalTarget,
+      internalTarget,
+      action: point?.action || "HOLD",
+      score: 0
+    };
+  });
+  const totalEquity = rawRows.reduce((sum, row) => sum + row.equity, 0);
+  const totalStock = rawRows.reduce((sum, row) => sum + row.stock, 0);
+  const totalCash = rawRows.reduce((sum, row) => sum + row.cash, 0);
+  const rows = rawRows.map((row) => ({
+    ...row,
+    actualExposure: totalEquity ? row.stock / totalEquity : 0,
+    nextTarget: totalEquity ? row.desiredStock / totalEquity : 0
+  }));
+  return {
+    baselineDate,
+    rows,
+    totalEquity,
+    totalStock,
+    totalCash,
+    nextTarget: totalEquity ? rawRows.reduce((sum, row) => sum + row.desiredStock, 0) / totalEquity : 0
+  };
+}
+
+function renderHoldings(date) {
+  const isPure = state.bookStrategy === "fly";
+  const book = isPure ? pureHoldingsBook(date) : riskHoldingsBook(date);
+  const { baselineDate, rows, totalEquity, totalStock, totalCash, nextTarget } = book;
+
+  $("#holdings-kicker").textContent = `LIVE PAPER BOOK · ${isPure ? "PURE FLY" : "FLY+RISK"}`;
+  $("#holdings-subtitle").textContent = t(isPure ? "holdingsPureSubtitle" : "holdingsRiskSubtitle");
+  $("#holdings-score-heading").textContent = t(isPure ? "signalLabel" : "allocationScore");
+  $$("#holdings-strategy-toggle [data-book-strategy]").forEach((button) =>
+    button.setAttribute("aria-pressed", String(button.dataset.bookStrategy === state.bookStrategy))
+  );
   $("#holdings-date").textContent = `${date} · ${t("periodBasis")}`;
   $("#holdings-equity").textContent = money(totalEquity);
   $("#holdings-stock").textContent = money(totalStock);
@@ -906,14 +993,14 @@ function renderHoldings(date) {
   $("#holdings-next-target").textContent = `${(nextTarget * 100).toFixed(1)}%`;
   $("#holdings-table").innerHTML = rows.map((row) => `<tr class="${row.meta.symbol === state.symbol ? "selected-holding" : ""}">
     <td><strong>${escapeHtml(row.meta.name)}</strong><small>${escapeHtml(row.meta.symbol)} · ${escapeHtml(t("asOf"))} ${row.marketDate || "—"}${row.executed ? ` · ${escapeHtml(t("rebalanced"))}` : ` · ${escapeHtml(t("carried"))}`}</small></td>
-    <td><b class="holding-score">${row.score >= 0 ? "+" : ""}${row.score.toFixed(2)}</b></td>
+    <td>${isPure ? `<b class="holding-signal action ${row.action}">${escapeHtml(actionLabel(row.action))}</b>` : `<b class="holding-score">${row.score >= 0 ? "+" : ""}${row.score.toFixed(2)}</b>`}</td>
     <td>${shareNumber(row.shares)}</td>
     <td>${escapeHtml(localPrice(row.rawPrice, row.meta.symbol))}</td>
     <td>${money(row.stock)}</td>
     <td><b class="holding-exposure">${(row.actualExposure * 100).toFixed(1)}%</b></td>
     <td><b class="holding-target">${(row.nextTarget * 100).toFixed(1)}%</b></td>
   </tr>`).join("");
-  $("#holdings-footnote").textContent = `${t("holdingsFootnote")} ${baselineDate} ${state.locale === "ko" ? "평가액을 $100,000으로 비례 환산했습니다." : "account value is proportionally rebased to $100,000."}`;
+  $("#holdings-footnote").textContent = `${t(isPure ? "holdingsPureFootnote" : "holdingsRiskFootnote")} ${baselineDate} ${state.locale === "ko" ? "평가액을 $100,000으로 맞춰 표시했습니다." : "account value is rebased to $100,000."}`;
 }
 
 function renderBrain(point) {
@@ -949,10 +1036,16 @@ function renderBrain(point) {
   renderDecoderAnatomy(vote, Boolean(point.engine));
   selectBrainRegion(state.selectedRegion);
 
-  const exposure = Math.round((point.portfolioTargetExposure ?? point.riskTarget) * 100);
-  const activeStep = Math.max(0, EXPOSURE_LEVELS.indexOf(exposure));
-  $("#exposure-readout").textContent = `${exposure}% · ${activeStep + 1}/10 ${t("stepOf")}`;
-  $("#exposure-ladder").innerHTML = EXPOSURE_LEVELS.map((level, index) =>
+  const pureSelected = state.strategy === "fly";
+  const portfolioSnapshot = pointAtOrBefore(state.data.portfolioTrace || [], point.date);
+  const exposure = Math.round((pureSelected ? point.flyNextTarget : portfolioSnapshot?.targetExposure ?? point.riskTarget) * 100);
+  const exposureLevels = pureSelected ? PURE_EXPOSURE_LEVELS : RISK_EXPOSURE_LEVELS;
+  const activeStep = Math.max(0, exposureLevels.indexOf(exposure));
+  $("#exposure-title").textContent = t(pureSelected ? "pureNextExposure" : "nextExposure");
+  $("#exposure-note").textContent = t(pureSelected ? "pureExposureNote" : "exposureNote");
+  $("#exposure-ladder").setAttribute("aria-label", t(pureSelected ? "pureExposureLadder" : "exposureLadder"));
+  $("#exposure-readout").textContent = `${exposure}% · ${activeStep + 1}/${exposureLevels.length} ${t("stepOf")}`;
+  $("#exposure-ladder").innerHTML = exposureLevels.map((level, index) =>
     `<span class="${index === activeStep ? "active" : ""} ${index < activeStep ? "passed" : ""}"><i></i><b>${level}%</b></span>`
   ).join("");
 }
@@ -1025,9 +1118,14 @@ function renderVotes(votes) {
 
 function renderTable() {
   const rows = currentTrace().slice(Math.max(0, state.index - 7), state.index + 1).reverse();
-  $("#decision-table").innerHTML = rows.map((row) =>
-    `<tr><td>${row.date}</td><td class="action ${row.action}">${actionLabel(row.action)}</td><td>${((Number(row.riskActualExposure) || 0) * 100).toFixed(1)}%</td><td>${Math.round(row.riskTarget * 100)}%</td><td>${escapeHtml(localPrice(row.rawClose ?? row.close))}</td><td class="${row.reward < 0 ? "negative" : "positive"}">${row.reward.toFixed(2)}</td></tr>`
-  ).join("");
+  const pureSelected = state.strategy === "fly";
+  $("#decision-table").innerHTML = rows.map((row) => {
+    const portfolioPoint = pointAtOrBefore(state.data.portfolioTrace || [], row.date);
+    const holding = portfolioPoint?.holdings?.[state.symbol];
+    const actualExposure = pureSelected ? row.flyActualExposure : holding?.weight ?? row.riskActualExposure;
+    const nextTarget = pureSelected ? row.flyNextTarget : holding?.target ?? row.riskTarget;
+    return `<tr><td>${row.date}</td><td class="action ${row.action}">${actionLabel(row.action)}</td><td>${((Number(actualExposure) || 0) * 100).toFixed(1)}%</td><td>${Math.round(Number(nextTarget) * 100)}%</td><td>${escapeHtml(localPrice(row.rawClose ?? row.close))}</td><td class="${row.reward < 0 ? "negative" : "positive"}">${row.reward.toFixed(2)}</td></tr>`;
+  }).join("");
 }
 
 function stopPlayback() {
@@ -1059,7 +1157,18 @@ $("#symbol-select").addEventListener("change", (event) => {
   renderSelected();
 });
 
-$("#strategy-select").addEventListener("change", (event) => { state.strategy = event.target.value; renderAll(); });
+$("#strategy-select").addEventListener("change", (event) => {
+  state.strategy = event.target.value;
+  state.bookStrategy = event.target.value;
+  renderAll();
+});
+$("#holdings-strategy-toggle").addEventListener("click", (event) => {
+  const button = event.target.closest("[data-book-strategy]");
+  if (!button || !state.data) return;
+  state.bookStrategy = button.dataset.bookStrategy;
+  const date = state.index === Number($("#time-slider").max) ? state.rangeEnd : currentPoint().date;
+  renderHoldings(date);
+});
 $("#period-presets").addEventListener("click", (event) => {
   const button = event.target.closest("[data-period]");
   if (!button || !state.data) return;
@@ -1169,7 +1278,14 @@ $$('[data-locale]').forEach((button) => button.addEventListener("click", () => {
   applyLocale();
 }));
 
+$$('[data-theme-value]').forEach((button) => button.addEventListener("click", () => {
+  state.theme = button.dataset.themeValue;
+  localStorage.setItem("flyfund-theme", state.theme);
+  applyTheme();
+}));
+
 window.addEventListener("resize", () => { if (state.data) { renderPerformance(); renderCandles(); } });
 
+applyTheme();
 applyLocale();
 loadDashboard();

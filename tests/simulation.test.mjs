@@ -23,6 +23,10 @@ test("simulation is deterministic for a fixed seed", () => {
   assert.deepEqual(a.sleeves.NVDA.trace.at(-1).votes, b.sleeves.NVDA.trace.at(-1).votes);
 });
 
+test("simulation defaults to experiment seed 2", () => {
+  assert.equal(runSimulation(demoMarket()).seed, 2);
+});
+
 test("simulation exposes paper-only settings and all M7 plus SK hynix assets", () => {
   const result = runSimulation(demoMarket(), 42);
   assert.equal(result.engine.actualConnectome, false);
@@ -68,9 +72,16 @@ test("fly strategies avoid all-in/all-out and Fly+Risk uses ten exposure levels"
   assert.ok(activeSnapshots.every((point) => allowed.includes(Number(point.targetExposure.toFixed(2)))));
   assert.ok(activeSnapshots.every((point) => Object.values(point.holdings).every((holding) => holding.target <= 0.25 + 1e-12)));
   assert.ok(activeSnapshots.some((point) => new Set(Object.values(point.holdings).map((holding) => holding.target.toFixed(4))).size > 1));
-  assert.ok(Object.values(result.sleeves).every((sleeve) =>
-    sleeve.trace.every((point) => point.flyTarget > 0 && point.flyTarget < 1)
-  ));
+  for (const sleeve of Object.values(result.sleeves)) {
+    assert.equal(sleeve.trace[0].flyTarget, 0.5);
+    assert.ok(sleeve.trace.every((point) => point.flyTarget >= 0.2 && point.flyTarget <= 0.8));
+    assert.ok(sleeve.trace.every((point) => point.flyNextTarget >= 0.2 && point.flyNextTarget <= 0.8));
+    for (const point of sleeve.trace) {
+      const change = Math.abs(point.flyNextTarget - point.flyTarget);
+      assert.ok(change <= 0.1 + 1e-12);
+      if (change > 1e-12) assert.ok(point.flySignalStreak >= 2);
+    }
+  }
   for (const key of ["flyRisk", "fly", "buyHold", "sma", "random"]) {
     assert.ok(result.feesByStrategy[key] > 0);
   }

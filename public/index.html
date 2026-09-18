@@ -12,21 +12,36 @@
   <meta name="twitter:title" content="FlyFund Arena · Fruit-Fly Market Lab">
   <meta name="twitter:description" content="Fruit-fly connectome signals meet the Magnificent Seven and SK hynix.">
   <meta name="twitter:image" content="__SITE_URL__/og.png">
-  <meta name="color-scheme" content="dark">
+  <meta name="color-scheme" content="dark light">
   <meta name="description" content="Fruit-fly connectome paper-trading research dashboard">
   <title>FlyFund Arena</title>
+  <script>
+    (() => {
+      const saved = localStorage.getItem("flyfund-theme");
+      document.documentElement.dataset.theme = saved === "light" || saved === "dark"
+        ? saved
+        : "dark";
+    })();
+  </script>
   <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
   <div class="ambient ambient-a"></div>
   <div class="ambient ambient-b"></div>
   <main class="shell">
-    <nav class="utility-bar" aria-label="Language">
+    <nav class="utility-bar" aria-label="Language and appearance">
       <span data-i18n="utility">FRUIT-FLY MARKET LAB · PAPER RESEARCH ONLY</span>
-      <div class="language-toggle" role="group" aria-label="Language selection">
-        <button type="button" data-locale="ko" aria-pressed="true">한국어</button>
-        <i aria-hidden="true"></i>
-        <button type="button" data-locale="en" aria-pressed="false">English</button>
+      <div class="utility-controls">
+        <div class="language-toggle" role="group" aria-label="Language selection">
+          <button type="button" data-locale="ko" aria-pressed="true">한국어</button>
+          <i aria-hidden="true"></i>
+          <button type="button" data-locale="en" aria-pressed="false">English</button>
+        </div>
+        <div class="theme-toggle" role="group" data-i18n-aria="appearance">
+          <button type="button" data-theme-value="dark" aria-pressed="true" data-i18n="darkMode">다크</button>
+          <i aria-hidden="true"></i>
+          <button type="button" data-theme-value="light" aria-pressed="false" data-i18n="lightMode">라이트</button>
+        </div>
       </div>
     </nav>
 
@@ -79,7 +94,7 @@
       </label>
       <label>
         <span data-i18n="seed">실험 시드</span>
-        <input id="seed-input" type="number" min="1" max="999999" value="42">
+        <input id="seed-input" type="number" value="2" readonly aria-readonly="true">
       </label>
       <button type="button" id="rerun-button" class="button" data-i18n="rerun">같은 조건으로 재실행</button>
       <button type="button" id="update-button" class="button primary" data-i18n="update">오늘 데이터 업데이트</button>
@@ -112,11 +127,17 @@
     <section class="panel holdings-panel" id="holdings-panel">
       <div class="panel-head compact">
         <div>
-          <p class="section-kicker">LIVE PAPER BOOK · FLY+RISK</p>
-          <h2 data-i18n="holdingsTitle">현재 투입 자산 내역</h2>
-          <p class="microcopy" data-i18n="holdingsSubtitle">통합 $100,000 계좌에서 8종목이 점수로 자금을 경쟁한 실제 모의 보유량입니다.</p>
+          <p class="section-kicker" id="holdings-kicker">LIVE PAPER BOOK · FLY+RISK</p>
+          <h2 data-i18n="holdingsTitle">현재 보유 내역</h2>
+          <p class="microcopy" id="holdings-subtitle">한 계좌에서 종목별 신호와 위험 수준을 함께 반영한 모의 보유 내역입니다.</p>
         </div>
-        <span class="mini-badge" id="holdings-date">—</span>
+        <div class="book-tools">
+          <div class="book-toggle" id="holdings-strategy-toggle" role="group" data-i18n-aria="holdingsBook">
+            <button type="button" data-book-strategy="flyRisk" aria-pressed="true" data-i18n="holdingsRisk">Fly+Risk</button>
+            <button type="button" data-book-strategy="fly" aria-pressed="false" data-i18n="holdingsPure">Pure Fly</button>
+          </div>
+          <span class="mini-badge" id="holdings-date">—</span>
+        </div>
       </div>
       <div class="holdings-summary">
         <div><span data-i18n="bookValue">계좌 평가액</span><strong id="holdings-equity">—</strong></div>
@@ -127,18 +148,19 @@
       </div>
       <div class="table-wrap holdings-table-wrap">
         <table class="holdings-table">
-          <thead><tr><th data-i18n="holdingAsset">종목</th><th data-i18n="allocationScore">배분 점수</th><th data-i18n="shares">보유 수량</th><th data-i18n="markPrice">기준 가격</th><th data-i18n="stockValue">주식 평가액</th><th data-i18n="actualExposure">현재 비중</th><th data-i18n="nextTargetShort">다음 목표</th></tr></thead>
+          <thead><tr><th data-i18n="holdingAsset">종목</th><th id="holdings-score-heading" data-i18n="allocationScore">종목 점수</th><th data-i18n="shares">보유 수량</th><th data-i18n="markPrice">기준 가격</th><th data-i18n="stockValue">주식 평가액</th><th data-i18n="actualExposure">현재 비중</th><th data-i18n="nextTargetShort">다음 목표</th></tr></thead>
           <tbody id="holdings-table"></tbody>
         </table>
       </div>
-      <p class="panel-footnote" id="holdings-footnote" data-i18n="holdingsFootnote">수수료·환율 반영 통합 모의 장부입니다. 소수점 수량을 허용하고 종목당 목표는 최대 25%이며, 목표 비중은 다음 거래일 시가에 적용됩니다.</p>
+      <p class="panel-footnote" id="holdings-footnote">수수료와 환율을 반영했습니다. 종목당 목표는 최대 25%이며, 새 목표는 다음 거래일 시가에 적용됩니다.</p>
     </section>
 
     <details class="guide" id="guide">
       <summary><span class="guide-mark">?</span><span data-i18n="guideTitle">대시보드 읽는 법</span><span class="guide-hint" data-i18n="guideHint">용어와 숫자의 의미</span></summary>
       <div class="guide-grid">
-        <article><strong>Fly+Risk</strong><p data-i18n="guideFlyRisk">8개 종목이 뇌 합의·추세·변동성 점수로 자금을 경쟁합니다. 전체 주식 비중은 50~95%의 10단계, 종목당 최대 25%이며 배분은 최소 3거래일 유지합니다.</p></article>
-        <article><strong>Fly Signal</strong><p data-i18n="guidePureFly">뇌 다수결을 다음 거래일 시가에 5%·55%·95% 비중으로 반영한 직접 신호 대조군입니다.</p></article>
+        <article><strong>Fly+Risk</strong><p data-i18n="guideFlyRisk">8개 종목의 뇌 합의·추세·변동성을 비교해 비중을 정합니다. 전체 주식 비중은 50~95%, 종목당 최대 25%이며 한 번 정한 배분은 최소 3거래일 유지합니다.</p></article>
+        <article><strong>Pure Fly</strong><p data-i18n="guidePureFly">각 종목을 50% 비중에서 시작합니다. 매수나 매도 우세가 이틀 연속 이어지면 다음 시가에 10%p씩 조정하며, 비중은 20~80% 안에서 움직입니다.</p></article>
+        <article><strong data-i18n="labels.sma">이동평균</strong><p data-i18n="guideSma">수정주가 기준 5일 평균이 20일 평균보다 높으면 다음 시가에 매수하고, 낮거나 같으면 현금으로 전환합니다. 비교 기준이라 0%·100% 비중을 사용합니다.</p></article>
         <article><strong data-i18n="maxDrawdown">최대 낙폭</strong><p data-i18n="guideDrawdown">고점에서 저점까지 계좌가 가장 크게 줄었던 비율입니다.</p></article>
         <article><strong data-i18n="sharpe">샤프 지수</strong><p data-i18n="guideSharpe">변동성 대비 일별 수익입니다. 높을수록 같은 흔들림으로 더 많은 수익을 냈다는 뜻입니다.</p></article>
         <article><strong data-i18n="activityScore">활성도 0–100</strong><p data-i18n="guideActivity">영역별 스파이크를 로그 변환해 가장 활발한 영역을 100으로 둔 상대값입니다. 수익 확률이 아닙니다.</p></article>
@@ -368,9 +390,9 @@
         </div>
         <div class="regions" id="regions"></div>
         <div class="exposure-card">
-          <div><span data-i18n="nextExposure">다음 거래일 목표 비중</span><strong id="exposure-readout">—</strong></div>
+          <div><span id="exposure-title" data-i18n="nextExposure">다음 거래일 목표 비중</span><strong id="exposure-readout">—</strong></div>
           <div class="exposure-ladder" id="exposure-ladder" data-i18n-aria="exposureLadder"></div>
-          <small data-i18n="exposureNote">현금 5% 이상과 주식 5% 이상을 항상 유지합니다.</small>
+          <small id="exposure-note" data-i18n="exposureNote">전체 주식 비중을 50~95%의 10단계로 조절합니다.</small>
         </div>
       </article>
     </section>

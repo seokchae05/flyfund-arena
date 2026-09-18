@@ -71,7 +71,7 @@ const server = http.createServer(async (request, response) => {
       return json(response, 200, { ok: true, mode: "paper", engine: actual?.engine?.id || "fly-proxy-v1" });
     }
     if (url.pathname === "/api/dashboard" && request.method === "GET") {
-      const seed = Math.max(1, Math.min(999999, Number(url.searchParams.get("seed") || 42)));
+      const seed = 2;
       const market = await getMarketData({ allowUpdate: false });
       const simulation = runSimulation(market, seed);
       return json(response, 200, applyMaleCnsLatest(simulation, await readMaleCnsLatest()));
