@@ -4,7 +4,7 @@ import { demoMarket } from "../lib/market.mjs";
 
 test("demo market contains valid OHLC bars for every configured asset", () => {
   const market = demoMarket();
-  assert.equal(Object.keys(market.series).length, 5);
+  assert.equal(Object.keys(market.series).length, 8);
   assert.ok(market.fx.bars.length >= 300);
   for (const series of Object.values(market.series)) {
     assert.ok(series.bars.length >= 300);

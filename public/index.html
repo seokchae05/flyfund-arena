@@ -3,14 +3,14 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="A paper-trading experiment that translates fruit-fly connectome activity into market signals across five technology stocks.">
+  <meta name="description" content="A paper-trading experiment that translates fruit-fly connectome activity into market signals across the Magnificent Seven and SK hynix.">
   <meta property="og:type" content="website">
   <meta property="og:title" content="FlyFund Arena · Fruit-Fly Market Lab">
   <meta property="og:description" content="Explore how fruit-fly brain activity becomes paper-trading signals. No real orders.">
   <meta property="og:image" content="__SITE_URL__/og.png">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="FlyFund Arena · Fruit-Fly Market Lab">
-  <meta name="twitter:description" content="Fruit-fly connectome signals meet a five-stock paper fund.">
+  <meta name="twitter:description" content="Fruit-fly connectome signals meet the Magnificent Seven and SK hynix.">
   <meta name="twitter:image" content="__SITE_URL__/og.png">
   <meta name="color-scheme" content="dark">
   <meta name="description" content="Fruit-fly connectome paper-trading research dashboard">
@@ -114,7 +114,7 @@
         <div>
           <p class="section-kicker">LIVE PAPER BOOK · FLY+RISK</p>
           <h2 data-i18n="holdingsTitle">현재 투입 자산 내역</h2>
-          <p class="microcopy" data-i18n="holdingsSubtitle">목표 비중이 아니라 선택 날짜 종가 기준의 실제 모의 보유량입니다.</p>
+          <p class="microcopy" data-i18n="holdingsSubtitle">통합 $100,000 계좌에서 8종목이 점수로 자금을 경쟁한 실제 모의 보유량입니다.</p>
         </div>
         <span class="mini-badge" id="holdings-date">—</span>
       </div>
@@ -127,17 +127,17 @@
       </div>
       <div class="table-wrap holdings-table-wrap">
         <table class="holdings-table">
-          <thead><tr><th data-i18n="holdingAsset">종목</th><th data-i18n="shares">보유 수량</th><th data-i18n="markPrice">기준 가격</th><th data-i18n="stockValue">주식 평가액</th><th data-i18n="cashBalance">현금</th><th data-i18n="actualExposure">현재 비중</th><th data-i18n="nextTargetShort">다음 목표</th></tr></thead>
+          <thead><tr><th data-i18n="holdingAsset">종목</th><th data-i18n="allocationScore">배분 점수</th><th data-i18n="shares">보유 수량</th><th data-i18n="markPrice">기준 가격</th><th data-i18n="stockValue">주식 평가액</th><th data-i18n="actualExposure">현재 비중</th><th data-i18n="nextTargetShort">다음 목표</th></tr></thead>
           <tbody id="holdings-table"></tbody>
         </table>
       </div>
-      <p class="panel-footnote" id="holdings-footnote" data-i18n="holdingsFootnote">수수료·환율 반영 모의 장부입니다. 소수점 수량을 허용하며, 목표 비중은 다음 거래일 시가에 적용됩니다.</p>
+      <p class="panel-footnote" id="holdings-footnote" data-i18n="holdingsFootnote">수수료·환율 반영 통합 모의 장부입니다. 소수점 수량을 허용하고 종목당 목표는 최대 25%이며, 목표 비중은 다음 거래일 시가에 적용됩니다.</p>
     </section>
 
     <details class="guide" id="guide">
       <summary><span class="guide-mark">?</span><span data-i18n="guideTitle">대시보드 읽는 법</span><span class="guide-hint" data-i18n="guideHint">용어와 숫자의 의미</span></summary>
       <div class="guide-grid">
-        <article><strong>Fly+Risk</strong><p data-i18n="guideFlyRisk">3일 뇌 합의·추세·변동성으로 다음 거래일 목표를 5%부터 95%까지 조절합니다. 현재 보유 비중은 가격 변동 때문에 다를 수 있습니다.</p></article>
+        <article><strong>Fly+Risk</strong><p data-i18n="guideFlyRisk">8개 종목이 뇌 합의·추세·변동성 점수로 자금을 경쟁합니다. 전체 주식 비중은 50~95%의 10단계, 종목당 최대 25%이며 배분은 최소 3거래일 유지합니다.</p></article>
         <article><strong>Fly Signal</strong><p data-i18n="guidePureFly">뇌 다수결을 다음 거래일 시가에 5%·55%·95% 비중으로 반영한 직접 신호 대조군입니다.</p></article>
         <article><strong data-i18n="maxDrawdown">최대 낙폭</strong><p data-i18n="guideDrawdown">고점에서 저점까지 계좌가 가장 크게 줄었던 비율입니다.</p></article>
         <article><strong data-i18n="sharpe">샤프 지수</strong><p data-i18n="guideSharpe">변동성 대비 일별 수익입니다. 높을수록 같은 흔들림으로 더 많은 수익을 냈다는 뜻입니다.</p></article>
@@ -243,7 +243,7 @@
           <span class="mini-badge" id="race-date">—</span>
         </div>
         <div class="racetrack" id="racetrack"></div>
-        <p class="panel-footnote" data-i18n="raceFootnote">각 초파리의 단독 신호를 동일한 $10,000 계좌에 적용한 프록시 경기입니다.</p>
+        <p class="panel-footnote" data-i18n="raceFootnote">각 초파리의 단독 신호를 동일한 $100,000 계좌에 적용한 프록시 경기입니다.</p>
       </article>
 
       <article class="panel multiverse-panel">
@@ -270,7 +270,7 @@
           </div>
         </div>
         <div class="multiverse-verdict" id="multiverse-verdict">—</div>
-        <p class="panel-footnote" data-i18n="multiverseFootnote">선택일 다음 거래일의 시가→종가 움직임을 $2,000 종목 슬리브에 적용한 교육용 비교입니다.</p>
+        <p class="panel-footnote" data-i18n="multiverseFootnote">선택일 전체 계좌에서 해당 종목의 실제 목표 비중과 반대 비중(25%−목표)을 비교한 교육용 장면입니다.</p>
       </article>
     </section>
 
@@ -289,7 +289,7 @@
       <div class="validation-strip" id="validation-strip"></div>
       <div class="method-strip">
         <span data-i18n="nextOpen">다음 거래일 시가 체결</span>
-        <span data-i18n="initialCapital">초기자산 $10,000</span>
+        <span data-i18n="initialCapital">초기자산 $100,000</span>
         <span data-i18n="allFees">모든 전략 수수료 0.1%</span>
         <span data-i18n="fxAdjusted">원/달러 환율 반영</span>
         <span data-i18n="holidayCarry">휴장일 직전 평가액 유지</span>

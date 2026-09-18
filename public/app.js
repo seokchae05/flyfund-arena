@@ -8,24 +8,24 @@ const I18N = {
     symbol: "종목", kpiStrategy: "KPI 전략", seed: "실험 시드", rerun: "같은 조건으로 재실행", update: "오늘 데이터 업데이트", refreshPublished: "최신 배포 데이터 확인",
     keyPerformance: "핵심 성과", maxDrawdown: "최대 낙폭", lowerDefensive: "0에 가까울수록 방어적", sharpe: "샤프 지수",
     dailyReturns: "무위험 수익률 0% 가정 · 일별 기준", todayDecision: "오늘의 뇌 투표", guideTitle: "대시보드 읽는 법",
-    guideHint: "용어와 숫자의 의미", guideFlyRisk: "3일 뇌 합의·추세·변동성으로 다음 거래일 목표를 5%부터 95%까지 조절합니다. 현재 보유 비중은 가격 변동 때문에 다를 수 있습니다.",
+    guideHint: "용어와 숫자의 의미", guideFlyRisk: "8개 종목이 뇌 합의·추세·변동성 점수로 자금을 경쟁합니다. 전체 주식 비중은 50~95%의 10단계, 종목당 최대 25%이며 배분은 최소 3거래일 유지합니다.",
     guidePureFly: "뇌 다수결을 다음 거래일 시가에 5%·55%·95% 비중으로 반영한 직접 신호 대조군입니다.",
     guideDrawdown: "고점에서 저점까지 계좌가 가장 크게 줄었던 비율입니다.",
     guideSharpe: "변동성 대비 일별 수익입니다. 높을수록 같은 흔들림으로 더 많은 수익을 냈다는 뜻입니다.",
     activityScore: "활성도 0–100", guideActivity: "영역별 스파이크를 로그 변환해 가장 활발한 영역을 100으로 둔 상대값입니다. 수익 확률이 아닙니다.",
     reward: "보상", guideReward: "과거 프록시에서 직전 계좌 수익을 -1~+1로 제한해 기억에 반영합니다. 최신 MaleCNS 실행에는 주입하지 않습니다.",
     replayTitle: "초파리의 판단이 포지션이 되는 순간", replayAgain: "이 장면 다시 보기", marketInput: "시장 입력", fourVotes: "네 개의 뇌 투표",
-    consensus: "집단 합의", positionSizing: "10단계 비중", stockExposure: "다음 거래일 목표", nextSessionResult: "다음 장 결과", discordIndex: "집단 불화 지수",
+    consensus: "집단 합의", positionSizing: "종목 경쟁 배분", stockExposure: "선택 종목 다음 목표", nextSessionResult: "다음 장 결과", discordIndex: "집단 불화 지수",
     discordCalm: "의견이 거의 하나로 모였습니다.", discordTense: "의견이 갈리며 긴장이 높습니다.", discordDeadlock: "2대2 교착 상태입니다.",
-    raceTitle: "어떤 시간 감각의 초파리가 앞서고 있나?", raceFootnote: "각 초파리의 단독 신호를 동일한 $10,000 계좌에 적용한 프록시 경기입니다.",
+    raceTitle: "어떤 시간 감각의 초파리가 앞서고 있나?", raceFootnote: "각 초파리의 단독 신호를 동일한 $100,000 계좌에 적용한 프록시 경기입니다.",
     rank: "위", flyNames: { 1: "정찰자", 2: "스윙어", 3: "항해자", 4: "예언자" },
     multiverseTitle: "반대로 결정했다면?", actualWorld: "이 세계 · Fly+Risk", oppositeWorld: "평행세계 · 반대 비중",
-    multiverseFootnote: "선택일 다음 거래일의 시가→종가 움직임을 $2,000 종목 슬리브에 적용한 교육용 비교입니다.",
+    multiverseFootnote: "선택일 전체 계좌에서 해당 종목의 실제 목표 비중과 반대 비중(25%−목표)을 비교한 교육용 장면입니다.",
     actualWorldWins: "초파리 세계가 평행세계보다 방어했습니다.", oppositeWorldWins: "이번 하루는 반대 비중이 더 유리했습니다.", worldsTie: "두 세계의 결과가 거의 같습니다.",
     awaitingNextSession: "다음 거래일 결과를 기다리는 중", resolvedFromPrevious: "최근 결과가 나온 판단", oneDayPnl: "하루 손익", exposureWord: "비중",
     leagueKicker: "LEAGUE TABLE · COST & FX ADJUSTED", leagueTitle: "위험 조절 초파리는 기준 전략을 이겼나?",
-    performanceChart: "전략별 누적 자산 비교 그래프", nextOpen: "다음 거래일 시가 체결", initialCapital: "선택 기간 시작 $10,000", allFees: "모든 전략 수수료 0.1%",
-    performancePeriod: "성과 조회 기간", latestPeriodHint: "기본 최근 1년 · 업데이트 후 최신 거래일로 자동 이동", periodStart: "시작일", periodEnd: "종료일", applyPeriod: "기간 적용", periodBasis: "선택 구간을 $10,000에서 재시작", periodInvalid: "시작일은 종료일보다 빨라야 합니다.",
+    performanceChart: "전략별 누적 자산 비교 그래프", nextOpen: "다음 거래일 시가 체결", initialCapital: "선택 기간 시작 $100,000", allFees: "모든 전략 수수료 0.1%",
+    performancePeriod: "성과 조회 기간", latestPeriodHint: "기본 최근 1년 · 업데이트 후 최신 거래일로 자동 이동", periodStart: "시작일", periodEnd: "종료일", applyPeriod: "기간 적용", periodBasis: "선택 구간을 $100,000에서 재시작", periodInvalid: "시작일은 종료일보다 빨라야 합니다.",
     fxAdjusted: "원/달러 환율 반영", holidayCarry: "휴장일 직전 평가액 유지", rollingWindows: "252거래일 창 · 63거래일 간격 점검",
     rollingLabel: "롤링 점검", profitableWindows: "수익 창", medianReturn: "중앙 수익률", worstWindowDrawdown: "최악 낙폭",
     marketView: "시장 시야", candleChart: "초파리에게 입력된 가격 캔들차트", marketSignals: "당일 감각 벡터", marketSignalsActual: "차트 요약 · 실제 MaleCNS 직접 입력값 아님", marketSignalsProxy: "프록시에 입력된 -1~+1 값", clickFlyHint: "초파리를 눌러 뇌 전환",
@@ -33,16 +33,16 @@ const I18N = {
     activityMicrocopy: "선택한 초파리의 당일 활성도를 대비 강화해 표시합니다. 숫자는 원래 상대값이며 수익 확률이 아닙니다.", swarmVotes: "초파리 4마리의 투표",
     brainMap: "회전 가능한 초파리 뇌 영역 지도", rotateLeft: "뇌를 왼쪽으로 회전", rotateRight: "뇌를 오른쪽으로 회전",
     dragBrain: "드래그해서 회전 · 점을 눌러 영역 확인", selectedRegion: "선택 영역", relativeActivity: "상대 활성도",
-    nextExposure: "다음 거래일 목표 비중", exposureLadder: "10단계 목표 비중", exposureNote: "현금 5% 이상과 주식 5% 이상을 항상 유지합니다.", stepOf: "단계",
+    nextExposure: "포트폴리오 다음 주식 비중", exposureLadder: "10단계 총 주식 비중", exposureNote: "전체 주식 50~95%, 종목당 최대 25%, 현금 5~50%로 운용합니다.", stepOf: "단계",
     recentDecisions: "최근 판단 기록", feesIncluded: "수수료·환율 포함", date: "날짜", brainVote: "뇌 투표", riskExposure: "다음 목표 비중", currentExposure: "현재 보유 비중",
-    holdingsTitle: "현재 투입 자산 내역", holdingsSubtitle: "목표 비중이 아니라 선택 날짜 종가 기준의 실제 모의 보유량입니다.", bookValue: "계좌 평가액", stockValue: "주식 평가액", cashBalance: "현금", actualExposure: "현재 보유 비중", weightedNextTarget: "다음 목표 비중", holdingAsset: "종목", shares: "보유 수량", markPrice: "기준 가격", nextTargetShort: "다음 목표", holdingsFootnote: "수수료·환율 반영 모의 장부입니다. 소수점 수량을 허용하며, 목표 비중은 다음 거래일 시가에 적용됩니다.", asOf: "기준", rebalanced: "당일 조정", carried: "유지",
+    holdingsTitle: "현재 투입 자산 내역", holdingsSubtitle: "통합 $100,000 계좌에서 8종목이 점수로 자금을 경쟁한 실제 모의 보유량입니다.", bookValue: "계좌 평가액", stockValue: "주식 평가액", cashBalance: "현금", actualExposure: "현재 주식 비중", weightedNextTarget: "다음 주식 총비중", holdingAsset: "종목", allocationScore: "배분 점수", shares: "보유 수량", markPrice: "기준 가격", nextTargetShort: "다음 목표", holdingsFootnote: "수수료·환율 반영 통합 모의 장부입니다. 소수점 수량을 허용하고 종목당 목표는 최대 25%이며, 목표 비중은 다음 거래일 시가에 적용됩니다.", asOf: "기준", rebalanced: "당일 조정", carried: "유지",
     close: "종가", paperOnly: "실험용 모의투자.", disclaimer: "투자 조언이나 실제 초파리 행동의 완전한 재현이 아닙니다.",
     lastUpdate: "마지막 업데이트", calculating: "시뮬레이션 계산 중…", localCalculation: "로컬 계산이 끝나면 자동으로 갱신됩니다.",
     loadFailed: "불러오기에 실패했습니다.", cachedTitle: "데모 또는 캐시 데이터로 실행 중", cachedCopy: "오늘 데이터 업데이트를 눌러 실제 일봉을 가져오세요.",
     freshTitle: "시세 데이터가 최신 상태입니다.", freshCopy: "장 마감 데이터만 사용하며 실제 주문은 실행하지 않습니다.", publishedCopy: "GitHub Actions가 만든 최신 공개 스냅샷입니다. 실제 주문은 실행하지 않습니다.",
     updating: "장 마감 데이터를 업데이트하는 중…", updateFailed: "업데이트에 실패했습니다.", cacheKept: "기존 캐시를 유지합니다.",
     actualMaleCns: "실제 MaleCNS", proxyReplay: "프록시 재생", rewardPositive: "보상", rewardNegative: "회피", marketSuffix: "시장 시야",
-    viewDays: "일 시야", equitySuffix: "자산 · $10,000 기준 프록시", engineActual: "오늘의 투표는 전체 MaleCNS v1.0 그래프를 사용합니다. 과거 수익곡선은 프록시 백테스트입니다.",
+    viewDays: "일 시야", equitySuffix: "자산 · $100,000 기준 프록시", engineActual: "오늘의 투표는 전체 MaleCNS v1.0 그래프를 사용합니다. 과거 수익곡선은 프록시 백테스트입니다.",
     engineProxy: "과거 수익곡선은 계산용 결정론적 프록시이며 실제 MaleCNS로 표시하지 않습니다.",
     microscope: {
       title: "한 마리의 뇌 안에서 무슨 일이 일어났나?", selected: "선택한 초파리", sense: "1 · 감각 입력", rewardMemory: "2 · 보상과 기억",
@@ -76,7 +76,7 @@ const I18N = {
     actions: { BUY: "매수", HOLD: "보유", SELL: "매도" },
     labels: { flyRisk: "Fly+Risk", fly: "Fly Signal", shuffled: "무작위 신경망", buyHold: "Buy & Hold", sma: "이동평균", random: "랜덤" },
     help: {
-      equity: "선택한 전략의 다섯 종목 합산 평가액입니다. 시작금액은 10,000달러입니다.",
+      equity: "선택한 전략의 8개 종목 합산 평가액입니다. 시작금액은 100,000달러입니다.",
       drawdown: "이전 최고 평가액에서 이후 최저 평가액까지의 최대 하락률입니다.",
       sharpe: "일별 평균수익을 일별 변동성으로 나눈 뒤 연율화했습니다. 무위험 수익률은 0%로 가정합니다.",
       decision: "네 초파리의 매수·보유·매도 다수결입니다. 동률이면 보유이며 Fly+Risk의 실제 투자 비중과는 다를 수 있습니다.",
@@ -114,24 +114,24 @@ const I18N = {
     symbol: "Asset", kpiStrategy: "KPI strategy", seed: "Experiment seed", rerun: "Rerun same setup", update: "Update daily data", refreshPublished: "Check published data",
     keyPerformance: "Key performance", maxDrawdown: "Maximum drawdown", lowerDefensive: "Closer to zero means more defensive", sharpe: "Sharpe ratio",
     dailyReturns: "0% risk-free rate · daily returns", todayDecision: "Today's brain vote", guideTitle: "How to read this dashboard",
-    guideHint: "Definitions for the numbers and terms", guideFlyRisk: "Uses three-day brain consensus, trend and volatility to set the next-session target from 5% to 95%. Current exposure can drift with price.",
+    guideHint: "Definitions for the numbers and terms", guideFlyRisk: "Eight assets compete for capital using brain consensus, trend and volatility scores. Total stock exposure uses ten levels from 50% to 95%, with a 25% cap per asset and a three-session minimum hold.",
     guidePureFly: "A direct-signal control mapping the brain majority to 5%, 55% or 95% exposure at the next market open.",
     guideDrawdown: "The largest peak-to-trough percentage decline in account value.",
     guideSharpe: "Daily return relative to volatility. Higher means more return for the same amount of movement.",
     activityScore: "Activity 0–100", guideActivity: "A relative score: region spikes are log-scaled and the most active region is set to 100. It is not a return probability.",
     reward: "Reward", guideReward: "Historical proxy memory uses the prior account return clipped to -1…+1. It is not injected into the latest MaleCNS run.",
     replayTitle: "The moment a fly-brain vote becomes a position", replayAgain: "Replay this decision", marketInput: "Market input", fourVotes: "Four brain votes",
-    consensus: "Swarm consensus", positionSizing: "Ten-step exposure", stockExposure: "Next-session target", nextSessionResult: "Next-session result", discordIndex: "Swarm disagreement",
+    consensus: "Swarm consensus", positionSizing: "Competitive allocation", stockExposure: "Selected asset's next target", nextSessionResult: "Next-session result", discordIndex: "Swarm disagreement",
     discordCalm: "The swarm is nearly unanimous.", discordTense: "Split opinions are raising the tension.", discordDeadlock: "The swarm is locked 2–2.",
-    raceTitle: "Which time-horizon fly is leading?", raceFootnote: "A proxy race applying each fly's solo signal to the same $10,000 account.",
+    raceTitle: "Which time-horizon fly is leading?", raceFootnote: "A proxy race applying each fly's solo signal to the same $100,000 account.",
     rank: "#", flyNames: { 1: "Scout", 2: "Swinger", 3: "Navigator", 4: "Oracle" },
     multiverseTitle: "What if it chose the opposite?", actualWorld: "This world · Fly+Risk", oppositeWorld: "Parallel world · opposite exposure",
-    multiverseFootnote: "An educational comparison applying the selected decision to a $2,000 sleeve over the next session's open-to-close move.",
+    multiverseFootnote: "An educational comparison between the selected asset's actual account weight and its opposite weight (25% minus target) over the next session.",
     actualWorldWins: "The fly world defended better than the parallel world.", oppositeWorldWins: "The opposite exposure won this single day.", worldsTie: "The two worlds finished almost level.",
     awaitingNextSession: "Waiting for the next session", resolvedFromPrevious: "Latest resolved decision", oneDayPnl: "one-day P&L", exposureWord: "exposure",
     leagueKicker: "LEAGUE TABLE · COST & FX ADJUSTED", leagueTitle: "Did risk-managed flies beat the benchmarks?",
-    performanceChart: "Cumulative account value by strategy", nextOpen: "Trades at next market open", initialCapital: "Selected period starts at $10,000", allFees: "0.1% fee on every strategy",
-    performancePeriod: "Performance period", latestPeriodHint: "Defaults to the latest year · moves to the newest session after update", periodStart: "Start", periodEnd: "End", applyPeriod: "Apply period", periodBasis: "Selected range rebased to $10,000", periodInvalid: "The start date must be earlier than the end date.",
+    performanceChart: "Cumulative account value by strategy", nextOpen: "Trades at next market open", initialCapital: "Selected period starts at $100,000", allFees: "0.1% fee on every strategy",
+    performancePeriod: "Performance period", latestPeriodHint: "Defaults to the latest year · moves to the newest session after update", periodStart: "Start", periodEnd: "End", applyPeriod: "Apply period", periodBasis: "Selected range rebased to $100,000", periodInvalid: "The start date must be earlier than the end date.",
     fxAdjusted: "USD/KRW FX adjusted", holidayCarry: "Last value carried across holidays", rollingWindows: "252-session windows · checked every 63 sessions",
     rollingLabel: "Rolling check", profitableWindows: "profitable windows", medianReturn: "median return", worstWindowDrawdown: "worst drawdown",
     marketView: "Market view", candleChart: "Price candlesticks shown to the fly", marketSignals: "Daily sensory vector", marketSignalsActual: "Chart summary · not direct MaleCNS inputs", marketSignalsProxy: "Actual -1…+1 proxy inputs", clickFlyHint: "Select a fly to switch brains",
@@ -139,16 +139,16 @@ const I18N = {
     activityMicrocopy: "Contrast-enhanced activity for the selected fly and date. Labels retain the original relative score; they are not return probabilities.", swarmVotes: "Votes from four flies",
     brainMap: "Rotatable fruit-fly brain-region map", rotateLeft: "Rotate brain left", rotateRight: "Rotate brain right",
     dragBrain: "Drag to rotate · select a point to inspect a region", selectedRegion: "Selected region", relativeActivity: "Relative activity",
-    nextExposure: "Next-session target exposure", exposureLadder: "Ten target-exposure levels", exposureNote: "Always keeps at least 5% cash and 5% stock exposure.", stepOf: "step",
+    nextExposure: "Next total stock exposure", exposureLadder: "Ten total-exposure levels", exposureNote: "Runs at 50–95% total stock exposure, caps each asset at 25%, and keeps 5–50% cash.", stepOf: "step",
     recentDecisions: "Recent decision trail", feesIncluded: "Fees & FX included", date: "Date", brainVote: "Brain vote", riskExposure: "Next target", currentExposure: "Current exposure",
-    holdingsTitle: "Currently deployed assets", holdingsSubtitle: "Actual paper holdings marked at the selected close—not target weights.", bookValue: "Account value", stockValue: "Stock value", cashBalance: "Cash", actualExposure: "Current exposure", weightedNextTarget: "Next target", holdingAsset: "Asset", shares: "Shares held", markPrice: "Mark price", nextTargetShort: "Next target", holdingsFootnote: "Paper ledger with fees and FX included. Fractional shares are allowed; target exposure is applied at the next market open.", asOf: "as of", rebalanced: "adjusted today", carried: "carried",
+    holdingsTitle: "Currently deployed assets", holdingsSubtitle: "Actual paper holdings after eight assets compete for capital in one $100,000 account.", bookValue: "Account value", stockValue: "Stock value", cashBalance: "Cash", actualExposure: "Current stock exposure", weightedNextTarget: "Next total exposure", holdingAsset: "Asset", allocationScore: "Allocation score", shares: "Shares held", markPrice: "Mark price", nextTargetShort: "Next target", holdingsFootnote: "Unified paper ledger with fees and FX included. Fractional shares are allowed, each target is capped at 25%, and targets execute at the next market open.", asOf: "as of", rebalanced: "adjusted today", carried: "carried",
     close: "Close", paperOnly: "Paper-trading experiment.", disclaimer: "Not investment advice or a complete reproduction of fruit-fly behavior.",
     lastUpdate: "Last update", calculating: "Running simulation…", localCalculation: "The dashboard refreshes when local computation finishes.",
     loadFailed: "Could not load the dashboard.", cachedTitle: "Running on demo or cached data", cachedCopy: "Use Update daily data to fetch the latest daily bars.",
     freshTitle: "Market data is current.", freshCopy: "Only end-of-day data is used. No real orders are sent.", publishedCopy: "This is the latest public snapshot produced by GitHub Actions. No real orders are sent.",
     updating: "Updating end-of-day market data…", updateFailed: "Update failed.", cacheKept: "The existing cache was kept.",
     actualMaleCns: "Actual MaleCNS", proxyReplay: "Proxy replay", rewardPositive: "Reward", rewardNegative: "Avoidance", marketSuffix: "market view",
-    viewDays: "day view", equitySuffix: "account · $10,000 proxy", engineActual: "Today's votes use the full MaleCNS v1.0 graph. Historical equity curves remain proxy backtests.",
+    viewDays: "day view", equitySuffix: "account · $100,000 proxy", engineActual: "Today's votes use the full MaleCNS v1.0 graph. Historical equity curves remain proxy backtests.",
     engineProxy: "Historical curves use a deterministic compute proxy and are not presented as actual MaleCNS output.",
     microscope: {
       title: "What happened inside one fly brain?", selected: "Selected fly", sense: "1 · Sensory input", rewardMemory: "2 · Reward & memory",
@@ -182,7 +182,7 @@ const I18N = {
     actions: { BUY: "BUY", HOLD: "HOLD", SELL: "SELL" },
     labels: { flyRisk: "Fly+Risk", fly: "Fly Signal", shuffled: "Shuffled network", buyHold: "Buy & Hold", sma: "Moving average", random: "Random" },
     help: {
-      equity: "Combined account value across the five assets. Starting capital is $10,000.",
+      equity: "Combined account value across the eight assets. Starting capital is $100,000.",
       drawdown: "The largest decline from a previous account-value peak to a later trough.",
       sharpe: "Annualized daily mean return divided by daily volatility, assuming a 0% risk-free rate.",
       decision: "The majority BUY, HOLD or SELL vote from four flies; a tie is HOLD. It can differ from the Fly+Risk exposure.",
@@ -250,7 +250,7 @@ const BRAIN_POINTS = [
   { x: 27, y: 5, z: 101, color: "#ff7b86" }
 ];
 
-const EXPOSURE_LEVELS = Array.from({ length: 10 }, (_, index) => index * 10 + 5);
+const EXPOSURE_LEVELS = Array.from({ length: 10 }, (_, index) => index * 5 + 50);
 const PERFORMANCE_KEYS = ["flyRisk", "fly", "buyHold", "sma"];
 
 const $ = (selector) => document.querySelector(selector);
@@ -799,10 +799,10 @@ function renderMultiverse() {
   const next = trace[decisionIndex + 1];
   const move = next.open ? next.close / next.open - 1 : 0;
   const actualExposure = point.riskTarget;
-  const oppositeExposure = 1 - actualExposure;
-  const sleeve = state.data.settings.sleeveCash;
-  const actualPnl = sleeve * actualExposure * move;
-  const oppositePnl = sleeve * oppositeExposure * move;
+  const oppositeExposure = Math.max(0, state.data.settings.riskMaximumStockWeight - actualExposure);
+  const accountValue = Number(point.riskEquity) || state.data.settings.initialCash;
+  const actualPnl = accountValue * actualExposure * move;
+  const oppositePnl = accountValue * oppositeExposure * move;
   const scale = Math.max(1, Math.abs(actualPnl), Math.abs(oppositePnl));
 
   $("#multiverse-date").textContent = `${point.date} → ${next.date}`;
@@ -873,30 +873,30 @@ function shareNumber(value) {
 }
 
 function renderHoldings(date) {
-  const baselinePoint = state.data.curves.flyRisk.find((point) => point.date >= state.rangeStart) || state.data.curves.flyRisk[0];
+  const portfolioTrace = state.data.portfolioTrace || [];
+  const baselinePoint = portfolioTrace.find((point) => point.date >= state.rangeStart) || portfolioTrace[0];
   const baselineDate = baselinePoint?.date || state.rangeStart;
   const baselineEquity = Number(baselinePoint?.value) || state.data.settings.initialCash;
   const scale = baselineEquity ? state.data.settings.initialCash / baselineEquity : 1;
+  const snapshot = pointAtOrBefore(portfolioTrace, date);
   const rows = state.data.symbols.map((meta) => {
-    const point = pointAtOrBefore(state.data.sleeves[meta.symbol].trace, date);
-    const equity = (Number(point?.riskEquity) || 0) * scale;
-    const stock = (Number(point?.riskStockValue) || 0) * scale;
-    const cash = (Number(point?.riskCash) || 0) * scale;
+    const holding = snapshot?.holdings?.[meta.symbol] || {};
     return {
       meta,
-      point,
-      equity,
-      stock,
-      cash,
-      shares: (Number(point?.riskShares) || 0) * scale,
-      actualExposure: equity ? stock / equity : 0,
-      nextTarget: Number(point?.riskTarget) || 0
+      marketDate: holding.marketDate,
+      executed: Boolean(holding.executed),
+      stock: (Number(holding.stockValue) || 0) * scale,
+      shares: (Number(holding.shares) || 0) * scale,
+      rawPrice: Number(holding.rawPrice) || 0,
+      actualExposure: Number(holding.weight) || 0,
+      nextTarget: Number(holding.target) || 0,
+      score: Number(holding.score) || 0
     };
   });
-  const totalEquity = rows.reduce((sum, row) => sum + row.equity, 0);
-  const totalStock = rows.reduce((sum, row) => sum + row.stock, 0);
-  const totalCash = rows.reduce((sum, row) => sum + row.cash, 0);
-  const nextTarget = totalEquity ? rows.reduce((sum, row) => sum + row.nextTarget * row.equity, 0) / totalEquity : 0;
+  const totalEquity = (Number(snapshot?.value) || 0) * scale;
+  const totalStock = (Number(snapshot?.stockValue) || 0) * scale;
+  const totalCash = (Number(snapshot?.cash) || 0) * scale;
+  const nextTarget = Number(snapshot?.targetExposure) || 0;
 
   $("#holdings-date").textContent = `${date} · ${t("periodBasis")}`;
   $("#holdings-equity").textContent = money(totalEquity);
@@ -905,15 +905,15 @@ function renderHoldings(date) {
   $("#holdings-actual-exposure").textContent = `${(totalEquity ? totalStock / totalEquity * 100 : 0).toFixed(1)}%`;
   $("#holdings-next-target").textContent = `${(nextTarget * 100).toFixed(1)}%`;
   $("#holdings-table").innerHTML = rows.map((row) => `<tr class="${row.meta.symbol === state.symbol ? "selected-holding" : ""}">
-    <td><strong>${escapeHtml(row.meta.name)}</strong><small>${escapeHtml(row.meta.symbol)} · ${escapeHtml(t("asOf"))} ${row.point?.date || "—"}${row.point?.riskExecuted ? ` · ${escapeHtml(t("rebalanced"))}` : ` · ${escapeHtml(t("carried"))}`}</small></td>
+    <td><strong>${escapeHtml(row.meta.name)}</strong><small>${escapeHtml(row.meta.symbol)} · ${escapeHtml(t("asOf"))} ${row.marketDate || "—"}${row.executed ? ` · ${escapeHtml(t("rebalanced"))}` : ` · ${escapeHtml(t("carried"))}`}</small></td>
+    <td><b class="holding-score">${row.score >= 0 ? "+" : ""}${row.score.toFixed(2)}</b></td>
     <td>${shareNumber(row.shares)}</td>
-    <td>${escapeHtml(localPrice(row.point?.rawClose ?? row.point?.close ?? 0, row.meta.symbol))}</td>
+    <td>${escapeHtml(localPrice(row.rawPrice, row.meta.symbol))}</td>
     <td>${money(row.stock)}</td>
-    <td>${money(row.cash)}</td>
     <td><b class="holding-exposure">${(row.actualExposure * 100).toFixed(1)}%</b></td>
-    <td><b class="holding-target">${Math.round(row.nextTarget * 100)}%</b></td>
+    <td><b class="holding-target">${(row.nextTarget * 100).toFixed(1)}%</b></td>
   </tr>`).join("");
-  $("#holdings-footnote").textContent = `${t("holdingsFootnote")} ${baselineDate} ${state.locale === "ko" ? "평가액을 $10,000으로 비례 환산했습니다." : "account value is proportionally rebased to $10,000."}`;
+  $("#holdings-footnote").textContent = `${t("holdingsFootnote")} ${baselineDate} ${state.locale === "ko" ? "평가액을 $100,000으로 비례 환산했습니다." : "account value is proportionally rebased to $100,000."}`;
 }
 
 function renderBrain(point) {
@@ -949,7 +949,7 @@ function renderBrain(point) {
   renderDecoderAnatomy(vote, Boolean(point.engine));
   selectBrainRegion(state.selectedRegion);
 
-  const exposure = Math.round(point.riskTarget * 100);
+  const exposure = Math.round((point.portfolioTargetExposure ?? point.riskTarget) * 100);
   const activeStep = Math.max(0, EXPOSURE_LEVELS.indexOf(exposure));
   $("#exposure-readout").textContent = `${exposure}% · ${activeStep + 1}/10 ${t("stepOf")}`;
   $("#exposure-ladder").innerHTML = EXPOSURE_LEVELS.map((level, index) =>
