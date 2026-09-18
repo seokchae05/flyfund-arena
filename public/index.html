@@ -1,0 +1,401 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A paper-trading experiment that translates fruit-fly connectome activity into market signals across five technology stocks.">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="FlyFund Arena · Fruit-Fly Market Lab">
+  <meta property="og:description" content="Explore how fruit-fly brain activity becomes paper-trading signals. No real orders.">
+  <meta property="og:image" content="__SITE_URL__/og.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="FlyFund Arena · Fruit-Fly Market Lab">
+  <meta name="twitter:description" content="Fruit-fly connectome signals meet a five-stock paper fund.">
+  <meta name="twitter:image" content="__SITE_URL__/og.png">
+  <meta name="color-scheme" content="dark">
+  <meta name="description" content="Fruit-fly connectome paper-trading research dashboard">
+  <title>FlyFund Arena</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <div class="ambient ambient-a"></div>
+  <div class="ambient ambient-b"></div>
+  <main class="shell">
+    <nav class="utility-bar" aria-label="Language">
+      <span data-i18n="utility">FRUIT-FLY MARKET LAB · PAPER RESEARCH ONLY</span>
+      <div class="language-toggle" role="group" aria-label="Language selection">
+        <button type="button" data-locale="ko" aria-pressed="true">한국어</button>
+        <i aria-hidden="true"></i>
+        <button type="button" data-locale="en" aria-pressed="false">English</button>
+      </div>
+    </nav>
+
+    <header class="topbar">
+      <div>
+        <p class="eyebrow" data-i18n="eyebrow">PAPER RESEARCH LAB · NO REAL ORDERS</p>
+        <h1>FlyFund <span>Arena</span></h1>
+        <p class="lede" data-i18n="lede">초파리 신경망이 오늘의 시장을 본다면.</p>
+      </div>
+      <div class="status-cluster" data-i18n-aria="experimentStatus">
+        <span class="status live"><i></i><span data-i18n="paperMode">PAPER MODE</span></span>
+        <span class="status" id="engine-status">ENGINE · <span data-i18n="checking">확인 중</span></span>
+      </div>
+    </header>
+
+    <section class="notice" id="notice" role="status">
+      <strong id="notice-title" data-i18n="loadingTitle">데이터를 불러오는 중입니다.</strong>
+      <span id="notice-copy" data-i18n="loadingCopy">잠시만 기다려주세요.</span>
+    </section>
+
+    <section class="toolbar" data-i18n-aria="controls">
+      <div class="toolbar-period">
+        <div class="toolbar-period-copy">
+          <strong data-i18n="performancePeriod">성과 조회 기간</strong>
+          <small data-i18n="latestPeriodHint">기본 최근 1년 · 업데이트 후 최신 거래일로 자동 이동</small>
+          <span class="mini-badge" id="period-latest">LATEST · —</span>
+        </div>
+        <div class="period-control" aria-label="Performance period">
+          <div class="period-presets" id="period-presets">
+            <button type="button" data-period="1Y" class="active">1Y</button>
+            <button type="button" data-period="3Y">3Y</button>
+            <button type="button" data-period="5Y">5Y</button>
+            <button type="button" data-period="MAX">MAX</button>
+          </div>
+          <label><span data-i18n="periodStart">시작일</span><input id="period-start" type="date"></label>
+          <label><span data-i18n="periodEnd">종료일</span><input id="period-end" type="date"></label>
+          <button type="button" class="button" id="period-apply" data-i18n="applyPeriod">기간 적용</button>
+        </div>
+      </div>
+      <label>
+        <span data-i18n="symbol">종목</span>
+        <select id="symbol-select"></select>
+      </label>
+      <label>
+        <span data-i18n="kpiStrategy">KPI 전략</span>
+        <select id="strategy-select">
+          <option value="flyRisk">Fly+Risk</option>
+          <option value="fly">Pure Fly</option>
+        </select>
+      </label>
+      <label>
+        <span data-i18n="seed">실험 시드</span>
+        <input id="seed-input" type="number" min="1" max="999999" value="42">
+      </label>
+      <button type="button" id="rerun-button" class="button" data-i18n="rerun">같은 조건으로 재실행</button>
+      <button type="button" id="update-button" class="button primary" data-i18n="update">오늘 데이터 업데이트</button>
+      <p class="last-update" id="last-update">—</p>
+    </section>
+
+    <section class="stats" data-i18n-aria="keyPerformance">
+      <article class="stat">
+        <span class="label-with-help"><span id="equity-label">Fly+Risk 자산 · 프록시 백테스트</span><button class="help-icon" type="button" data-help="equity">i</button></span>
+        <strong id="equity-stat">—</strong>
+        <small id="return-stat">—</small>
+      </article>
+      <article class="stat">
+        <span class="label-with-help"><span data-i18n="maxDrawdown">최대 낙폭</span><button class="help-icon" type="button" data-help="drawdown">i</button></span>
+        <strong id="drawdown-stat">—</strong>
+        <small data-i18n="lowerDefensive">0에 가까울수록 방어적</small>
+      </article>
+      <article class="stat">
+        <span class="label-with-help"><span data-i18n="sharpe">샤프 지수</span><button class="help-icon" type="button" data-help="sharpe">i</button></span>
+        <strong id="sharpe-stat">—</strong>
+        <small data-i18n="dailyReturns">무위험 수익률 0% 가정 · 일별 기준</small>
+      </article>
+      <article class="stat accent-stat">
+        <span class="label-with-help"><span data-i18n="todayDecision">오늘의 뇌 투표</span><button class="help-icon" type="button" data-help="decision">i</button></span>
+        <strong id="action-stat">—</strong>
+        <small id="vote-stat">—</small>
+      </article>
+    </section>
+
+    <section class="panel holdings-panel" id="holdings-panel">
+      <div class="panel-head compact">
+        <div>
+          <p class="section-kicker">LIVE PAPER BOOK · FLY+RISK</p>
+          <h2 data-i18n="holdingsTitle">현재 투입 자산 내역</h2>
+          <p class="microcopy" data-i18n="holdingsSubtitle">목표 비중이 아니라 선택 날짜 종가 기준의 실제 모의 보유량입니다.</p>
+        </div>
+        <span class="mini-badge" id="holdings-date">—</span>
+      </div>
+      <div class="holdings-summary">
+        <div><span data-i18n="bookValue">계좌 평가액</span><strong id="holdings-equity">—</strong></div>
+        <div><span data-i18n="stockValue">주식 평가액</span><strong id="holdings-stock">—</strong></div>
+        <div><span data-i18n="cashBalance">현금</span><strong id="holdings-cash">—</strong></div>
+        <div><span data-i18n="actualExposure">현재 보유 비중</span><strong id="holdings-actual-exposure">—</strong></div>
+        <div><span data-i18n="weightedNextTarget">다음 목표 비중</span><strong id="holdings-next-target">—</strong></div>
+      </div>
+      <div class="table-wrap holdings-table-wrap">
+        <table class="holdings-table">
+          <thead><tr><th data-i18n="holdingAsset">종목</th><th data-i18n="shares">보유 수량</th><th data-i18n="markPrice">기준 가격</th><th data-i18n="stockValue">주식 평가액</th><th data-i18n="cashBalance">현금</th><th data-i18n="actualExposure">현재 비중</th><th data-i18n="nextTargetShort">다음 목표</th></tr></thead>
+          <tbody id="holdings-table"></tbody>
+        </table>
+      </div>
+      <p class="panel-footnote" id="holdings-footnote" data-i18n="holdingsFootnote">수수료·환율 반영 모의 장부입니다. 소수점 수량을 허용하며, 목표 비중은 다음 거래일 시가에 적용됩니다.</p>
+    </section>
+
+    <details class="guide" id="guide">
+      <summary><span class="guide-mark">?</span><span data-i18n="guideTitle">대시보드 읽는 법</span><span class="guide-hint" data-i18n="guideHint">용어와 숫자의 의미</span></summary>
+      <div class="guide-grid">
+        <article><strong>Fly+Risk</strong><p data-i18n="guideFlyRisk">3일 뇌 합의·추세·변동성으로 다음 거래일 목표를 5%부터 95%까지 조절합니다. 현재 보유 비중은 가격 변동 때문에 다를 수 있습니다.</p></article>
+        <article><strong>Fly Signal</strong><p data-i18n="guidePureFly">뇌 다수결을 다음 거래일 시가에 5%·55%·95% 비중으로 반영한 직접 신호 대조군입니다.</p></article>
+        <article><strong data-i18n="maxDrawdown">최대 낙폭</strong><p data-i18n="guideDrawdown">고점에서 저점까지 계좌가 가장 크게 줄었던 비율입니다.</p></article>
+        <article><strong data-i18n="sharpe">샤프 지수</strong><p data-i18n="guideSharpe">변동성 대비 일별 수익입니다. 높을수록 같은 흔들림으로 더 많은 수익을 냈다는 뜻입니다.</p></article>
+        <article><strong data-i18n="activityScore">활성도 0–100</strong><p data-i18n="guideActivity">영역별 스파이크를 로그 변환해 가장 활발한 영역을 100으로 둔 상대값입니다. 수익 확률이 아닙니다.</p></article>
+        <article><strong data-i18n="reward">보상</strong><p data-i18n="guideReward">과거 프록시에서 직전 계좌 수익을 -1~+1로 제한해 기억에 반영합니다. 최신 MaleCNS 실행에는 주입하지 않습니다.</p></article>
+      </div>
+    </details>
+
+    <section class="panel replay-panel" id="decision-replay">
+      <div class="panel-head compact">
+        <div>
+          <p class="section-kicker">DECISION THEATER · ONE MARKET DAY</p>
+          <h2 data-i18n="replayTitle">초파리의 판단이 포지션이 되는 순간</h2>
+        </div>
+        <div class="replay-controls">
+          <span class="mini-badge" id="replay-date">—</span>
+          <button type="button" class="button replay-button" id="replay-button"><span aria-hidden="true">▶</span><span data-i18n="replayAgain">이 장면 다시 보기</span></button>
+        </div>
+      </div>
+      <div class="replay-flow" id="replay-flow">
+        <article class="replay-beat beat-market">
+          <span class="beat-number">01</span><small data-i18n="marketInput">시장 입력</small>
+          <strong id="replay-market">—</strong><em id="replay-move">—</em>
+        </article>
+        <i class="flow-link" aria-hidden="true"></i>
+        <article class="replay-beat beat-swarm">
+          <span class="beat-number">02</span><small data-i18n="fourVotes">네 개의 뇌 투표</small>
+          <div class="replay-flies" id="replay-flies"></div>
+        </article>
+        <i class="flow-link" aria-hidden="true"></i>
+        <article class="replay-beat beat-consensus">
+          <span class="beat-number">03</span><small data-i18n="consensus">집단 합의</small>
+          <div class="consensus-orb" id="consensus-orb"><strong id="replay-consensus">—</strong><span id="replay-split">—</span></div>
+        </article>
+        <i class="flow-link" aria-hidden="true"></i>
+        <article class="replay-beat beat-exposure">
+          <span class="beat-number">04</span><small data-i18n="positionSizing">10단계 비중</small>
+          <div class="exposure-dial" id="replay-dial"><strong id="replay-exposure">—</strong><span data-i18n="stockExposure">주식 비중</span></div>
+        </article>
+        <i class="flow-link" aria-hidden="true"></i>
+        <article class="replay-beat beat-result">
+          <span class="beat-number">05</span><small data-i18n="nextSessionResult">다음 장 결과</small>
+          <strong id="replay-result">—</strong><em id="replay-result-copy">—</em>
+        </article>
+      </div>
+      <div class="discord-line">
+        <span data-i18n="discordIndex">집단 불화 지수</span>
+        <div><i id="discord-fill"></i></div>
+        <strong id="discord-readout">—</strong>
+        <small id="discord-copy">—</small>
+      </div>
+      <section class="decision-microscope" id="decision-microscope" aria-live="polite">
+        <div class="microscope-head">
+          <div>
+            <p class="section-kicker">JUDGMENT MICROSCOPE · ONE FLY</p>
+            <h3 data-i18n="microscope.title">한 마리의 뇌 안에서 무슨 일이 일어났나?</h3>
+          </div>
+          <span class="mini-badge" id="microscope-mode">—</span>
+        </div>
+        <div class="microscope-process" id="microscope-process"></div>
+        <p class="microscope-disclosure" id="microscope-disclosure">—</p>
+      </section>
+    </section>
+
+    <section class="panel behavior-lab" id="behavior-lab">
+      <div class="panel-head compact">
+        <div>
+          <p class="section-kicker">BEHAVIOR TRANSLATOR · BIOLOGY → MARKET LABEL</p>
+          <h2 data-i18n="behavior.title">초파리 행동이 투자 신호로 번역되는 과정</h2>
+          <p class="microcopy" data-i18n="behavior.subtitle">접근·회피, 좌·우 회전, 매수·매도는 서로 다른 층입니다.</p>
+        </div>
+        <div class="behavior-controls" id="behavior-controls">
+          <button type="button" data-behavior-scenario="reward" aria-pressed="true" data-i18n="behavior.rewardCase">설탕 보상 사례</button>
+          <button type="button" data-behavior-scenario="aversive" aria-pressed="false" data-i18n="behavior.aversiveCase">불쾌 자극 사례</button>
+          <button type="button" class="behavior-replay" id="behavior-replay"><span aria-hidden="true">▶</span><span data-i18n="behavior.replay">다시 재생</span></button>
+        </div>
+      </div>
+      <div class="behavior-layout">
+        <article class="conditioning-story">
+          <div class="behavior-flow" id="behavior-flow"></div>
+          <p class="behavior-lesson" id="behavior-lesson">—</p>
+        </article>
+        <article class="mapping-lab">
+          <div class="mapping-head"><strong data-i18n="behavior.axisTitle">세 개의 서로 다른 행동 축</strong><span data-i18n="behavior.humanChoice">마지막 줄만 사람이 정한 라벨</span></div>
+          <div class="axis-stack" id="axis-stack"></div>
+          <div class="neural-readout" id="behavior-readout"></div>
+          <div class="mapping-actions">
+            <button type="button" class="button" id="mapping-flip" data-i18n="behavior.flip">매핑 뒤집어보기</button>
+            <span id="mapping-preview">—</span>
+          </div>
+          <p class="mapping-disclosure" id="mapping-disclosure">—</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="spectacle-grid">
+      <article class="panel race-panel">
+        <div class="panel-head compact">
+          <div>
+            <p class="section-kicker">THE FLY CUP · FOUR BRAINS</p>
+            <h2 data-i18n="raceTitle">어떤 시간 감각의 초파리가 앞서고 있나?</h2>
+          </div>
+          <span class="mini-badge" id="race-date">—</span>
+        </div>
+        <div class="racetrack" id="racetrack"></div>
+        <p class="panel-footnote" data-i18n="raceFootnote">각 초파리의 단독 신호를 동일한 $10,000 계좌에 적용한 프록시 경기입니다.</p>
+      </article>
+
+      <article class="panel multiverse-panel">
+        <div class="panel-head compact">
+          <div>
+            <p class="section-kicker">PARALLEL MARKET · NEXT SESSION</p>
+            <h2 data-i18n="multiverseTitle">반대로 결정했다면?</h2>
+          </div>
+          <span class="mini-badge" id="multiverse-date">—</span>
+        </div>
+        <div class="worlds">
+          <div class="world actual-world">
+            <small data-i18n="actualWorld">이 세계 · Fly+Risk</small>
+            <strong id="actual-world-pnl">—</strong>
+            <span id="actual-world-exposure">—</span>
+            <i id="actual-world-bar"></i>
+          </div>
+          <div class="world-divider"><span>VS</span></div>
+          <div class="world opposite-world">
+            <small data-i18n="oppositeWorld">평행세계 · 반대 비중</small>
+            <strong id="opposite-world-pnl">—</strong>
+            <span id="opposite-world-exposure">—</span>
+            <i id="opposite-world-bar"></i>
+          </div>
+        </div>
+        <div class="multiverse-verdict" id="multiverse-verdict">—</div>
+        <p class="panel-footnote" data-i18n="multiverseFootnote">선택일 다음 거래일의 시가→종가 움직임을 $2,000 종목 슬리브에 적용한 교육용 비교입니다.</p>
+      </article>
+    </section>
+
+    <section class="panel performance-panel">
+      <div class="panel-head">
+        <div>
+          <p class="section-kicker" data-i18n="leagueKicker">LEAGUE TABLE · COST & FX ADJUSTED</p>
+          <h2 data-i18n="leagueTitle">위험 조절 초파리는 기준 전략을 이겼나?</h2>
+        </div>
+      </div>
+      <div class="performance-subhead">
+        <span id="period-basis">—</span>
+        <div class="legend" id="performance-legend"></div>
+      </div>
+      <svg id="performance-chart" class="chart" role="img" data-i18n-aria="performanceChart"></svg>
+      <div class="validation-strip" id="validation-strip"></div>
+      <div class="method-strip">
+        <span data-i18n="nextOpen">다음 거래일 시가 체결</span>
+        <span data-i18n="initialCapital">초기자산 $10,000</span>
+        <span data-i18n="allFees">모든 전략 수수료 0.1%</span>
+        <span data-i18n="fxAdjusted">원/달러 환율 반영</span>
+        <span data-i18n="holidayCarry">휴장일 직전 평가액 유지</span>
+        <span data-i18n="rollingWindows">252거래일 창 · 63거래일 간격 점검</span>
+      </div>
+    </section>
+
+    <section class="analysis-workspace">
+      <div class="analysis-column">
+        <article class="panel market-panel">
+        <div class="panel-head compact">
+          <div>
+            <p class="section-kicker">VISUAL INPUT</p>
+            <h2 id="market-title" data-i18n="marketView">시장 시야</h2>
+          </div>
+          <div class="market-readout">
+            <strong id="price-readout">—</strong>
+            <span id="date-readout">—</span>
+          </div>
+        </div>
+        <svg id="candle-chart" class="chart candle" role="img" data-i18n-aria="candleChart"></svg>
+        <div class="market-signal-strip" id="market-signal-strip"></div>
+        <div class="timeline">
+          <button type="button" id="play-button" class="icon-button" data-i18n-aria="play">▶</button>
+          <input id="time-slider" type="range" min="0" max="1" value="1" data-i18n-aria="experimentDate">
+          <span id="timeline-label">—</span>
+        </div>
+        </article>
+
+        <article class="panel votes-panel">
+          <div class="panel-head compact">
+            <div>
+              <p class="section-kicker">THE SWARM · FOUR READOUTS</p>
+              <h2 data-i18n="swarmVotes">초파리 4마리의 투표</h2>
+            </div>
+            <span class="mini-badge" data-i18n="clickFlyHint">초파리를 눌러 뇌 전환</span>
+          </div>
+          <div class="votes" id="votes"></div>
+        </article>
+      </div>
+
+      <article class="panel brain-panel">
+        <div class="panel-head compact">
+          <div>
+            <p class="section-kicker">NEURAL ACTIVITY</p>
+            <h2 class="label-with-help"><span data-i18n="brainActivity">뇌 영역 활성도</span><button class="help-icon" type="button" data-help="activity">i</button></h2>
+            <p class="microcopy" data-i18n="activityMicrocopy">상대 활성도 · 높고 낮음은 매수/매도나 좋고 나쁨을 뜻하지 않습니다.</p>
+          </div>
+          <div class="badge-row">
+            <span class="mini-badge" id="brain-fly-badge">—</span>
+            <button class="mini-badge tooltip-trigger" id="neural-source" type="button">—</button>
+            <button class="mini-badge tooltip-trigger" id="reward-badge" type="button">—</button>
+          </div>
+        </div>
+        <div class="brain-stage" id="brain-stage" tabindex="0" data-i18n-aria="brainMap">
+          <div class="brain-grid" aria-hidden="true"></div>
+          <button type="button" class="brain-turn brain-turn-left" id="brain-turn-left" data-i18n-aria="rotateLeft">‹</button>
+          <div class="brain-scene" id="brain-scene">
+            <div class="brain-shadow"></div>
+            <div class="brain-lobe lobe-left"><i></i><i></i><i></i></div>
+            <div class="brain-lobe lobe-right"><i></i><i></i><i></i></div>
+            <div class="brain-bridge"></div>
+            <div class="brain-stem"></div>
+            <div class="brain-label" aria-hidden="true">FLY<br>BRAIN</div>
+            <div class="brain-hotspots" id="brain-hotspots"></div>
+            <div class="brain-decoders" id="brain-decoders"></div>
+          </div>
+          <button type="button" class="brain-turn brain-turn-right" id="brain-turn-right" data-i18n-aria="rotateRight">›</button>
+          <span class="brain-drag-hint" data-i18n="dragBrain">드래그해서 회전 · 점을 눌러 영역 확인</span>
+        </div>
+        <div class="decoder-anatomy" id="decoder-anatomy"></div>
+        <div class="brain-region-detail" id="brain-region-detail" aria-live="polite">
+          <div><span data-i18n="selectedRegion">선택 영역</span><strong id="selected-region-name">—</strong></div>
+          <p id="selected-region-copy">—</p>
+          <div class="region-detail-metric"><span data-i18n="relativeActivity">상대 활성도</span><strong id="selected-region-activity">—</strong></div>
+        </div>
+        <div class="regions" id="regions"></div>
+        <div class="exposure-card">
+          <div><span data-i18n="nextExposure">다음 거래일 목표 비중</span><strong id="exposure-readout">—</strong></div>
+          <div class="exposure-ladder" id="exposure-ladder" data-i18n-aria="exposureLadder"></div>
+          <small data-i18n="exposureNote">현금 5% 이상과 주식 5% 이상을 항상 유지합니다.</small>
+        </div>
+      </article>
+    </section>
+
+    <section class="panel audit-panel audit-wide">
+        <div class="panel-head compact">
+          <div>
+            <p class="section-kicker">AUDIT TRAIL</p>
+            <h2 data-i18n="recentDecisions">최근 판단 기록</h2>
+          </div>
+          <span class="mini-badge" data-i18n="feesIncluded">수수료·환율 포함</span>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th data-i18n="date">날짜</th><th data-i18n="brainVote">뇌 투표</th><th data-i18n="actualExposure">현재 보유 비중</th><th data-i18n="nextTargetShort">다음 목표</th><th data-i18n="close">종가</th><th data-i18n="reward">보상</th></tr></thead>
+            <tbody id="decision-table"></tbody>
+          </table>
+        </div>
+    </section>
+
+    <footer>
+      <p><strong data-i18n="paperOnly">실험용 모의투자.</strong> <span data-i18n="disclaimer">투자 조언이나 실제 초파리 행동의 완전한 재현이 아닙니다.</span></p>
+      <p id="engine-note"></p>
+    </footer>
+  </main>
+  <script type="module" src="/app.js"></script>
+</body>
+</html>

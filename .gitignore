@@ -1,0 +1,12 @@
+node_modules/
+dist/
+.venv/
+__pycache__/
+*.py[cod]
+.env
+data/*.partial
+data/*.tmp
+data/malecns/
+runs/
+.upstream-stonkfly/
+.tools/

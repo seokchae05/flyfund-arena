@@ -1,0 +1,17 @@
+{
+  "name": "flyfund-arena",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Paper-only fruit-fly market experiment dashboard",
+  "scripts": {
+    "start": "node server.mjs",
+    "build": "node scripts/build-static.mjs",
+    "update": "node scripts/update.mjs",
+    "daily": "node scripts/daily.mjs",
+    "test": "node --test"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
